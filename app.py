@@ -237,7 +237,13 @@ def funnel_analysis():
 
 def inventory_analysis():
     st.header("Inventory Analysis")
-    global df_inventory
+
+    # Ensure df_inventory is initialized or fetched correctly
+    global df_inventory  # Use global scope if df_inventory is already defined outside
+
+    if 'Current Stock' not in df_inventory.columns:
+        st.error("The 'Current Stock' column is missing from the inventory dataset.")
+        return
 
     # Ensure Timestamp Purchase is in datetime format
     df_transaction['Timestamp Purchase'] = pd.to_datetime(df_transaction['Timestamp Purchase'])
@@ -251,18 +257,26 @@ def inventory_analysis():
     # Merge average daily sales into inventory dataframe
     df_inventory = df_inventory.merge(average_daily_sales, on='Product ID', how='left')
 
-    # Add a column for reorder points (customize this logic if needed)
+    # Add a column for reorder points
     df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * 3  # Example: 3 days of average sales
+
+    # Fill missing values for current stock and reorder point
+    df_inventory['Current Stock'] = df_inventory['Current Stock'].fillna(0)
+    df_inventory['Reorder Point'] = df_inventory['Reorder Point'].fillna(0)
+
+    # Identify below-reorder-point products for color-coding and table
+    df_inventory['Below Reorder Point'] = df_inventory['Current Stock'] < df_inventory['Reorder Point']
+    colors = ['red' if below else 'skyblue' for below in df_inventory['Below Reorder Point']]
 
     # Plot the inventory levels and reorder points
     fig, ax = plt.subplots(figsize=(18, 8))
     product_ids = df_inventory['Product ID']
 
-    # Bar plot for current stock levels
-    ax.bar(
+    # Bar plot for current stock levels with color-coded bars
+    bars = ax.bar(
         product_ids,
         df_inventory['Current Stock'],
-        color='skyblue',
+        color=colors,
         alpha=0.7,
         label='Stock Level'
     )
@@ -277,11 +291,12 @@ def inventory_analysis():
     )
 
     # Annotate bars and lines for better readability
-    for i in range(len(product_ids)):
+    for i, bar in enumerate(bars):
+        height = bar.get_height()
         ax.text(
-            i,
-            df_inventory['Current Stock'].iloc[i] + 1,
-            f"{df_inventory['Current Stock'].iloc[i]:.0f}",
+            bar.get_x() + bar.get_width() / 2,
+            height + 1,
+            f"{height:.0f}",
             ha='center',
             fontsize=8
         )
@@ -305,6 +320,18 @@ def inventory_analysis():
     # Tighten layout and display the plot
     plt.tight_layout()
     st.pyplot(fig)
+
+    # Display the out-of-stock products table
+    out_of_stock = df_inventory[df_inventory['Below Reorder Point']][['Product ID', 'Product Name', 'Current Stock']]
+
+    if out_of_stock.empty:
+        st.subheader("Out-of-Stock Products")
+        st.write("No products are currently out of stock.")
+    else:
+        st.subheader("Out-of-Stock Products")
+        st.table(out_of_stock)
+
+
 
 def price_sensitivity():
     st.header("Price Sensitivity Analysis")
@@ -362,11 +389,31 @@ def price_sensitivity():
         plt.tight_layout()
         st.pyplot(plt)
 
+    # Generate tables showing best-to-worst promotions for each category
+    def generate_category_promo_tables(df):
+        categories = df['Product Category'].unique()
+        for category in categories:
+            category_data = df[df['Product Category'] == category]
+            promo_ranking = category_data.groupby(['Promotion Type'])['Units Sold'].sum().reset_index()
+            promo_ranking = promo_ranking.sort_values(by='Units Sold', ascending=False)
+
+            st.subheader(f"Promotions Ranked by Effectiveness - {category}")
+            st.table(
+                promo_ranking.rename(columns={'Units Sold': 'Total Units Sold'})
+                .style.format({'Total Units Sold': '{:.0f}'})
+            )
+
     promotion_types = df_merged['Promotion Type'].unique()
+
+    # Iterate through each promotion type, plot data, and display tables
     for promo_type in promotion_types:
         aggregated = prepare_promotion_data(df_merged, promo_type)
         st.subheader(f"Promotion Type: {promo_type}")
         plot_promotion_data(aggregated, promo_type)
+
+    # Generate and display category-specific tables
+    generate_category_promo_tables(df_merged)
+
 
 
 # Conditional Navigation Logic
