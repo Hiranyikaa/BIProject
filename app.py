@@ -20,12 +20,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load datasets
-df_behavioral = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Behavioral_Dataset.csv')
-df_customer = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Customer_Dataset.csv')
-df_item = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Transaction_Items_Dataset.csv')
-df_transaction = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Transaction_Dataset.csv')
-df_inventory = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Inventory_Dataset.csv')
-df_campaign = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Campaign_Dataset.csv')
+df_behavioral = pd.read_csv(r'Behavioral_Dataset.csv')
+df_customer = pd.read_csv(r'Customer_Dataset.csv')
+df_item = pd.read_csv(r'Transaction_Items_Dataset.csv')
+df_transaction = pd.read_csv(r'Transaction_Dataset.csv')
+df_inventory = pd.read_csv(r'Inventory_Dataset.csv')
+df_campaign = pd.read_csv(r'Campaign_Dataset.csv')
 
 # Sidebar Navigation
 st.sidebar.title("Dynamic BI for Retail")
