@@ -6,6 +6,7 @@ from itertools import combinations
 from collections import Counter
 
 
+<<<<<<< Updated upstream
 # โหลด datasets เหมือนที่ทำใน Colab
 df_behavioral = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Behavioral_Dataset.csv')
 df_customer = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Customer_Dataset.csv')
@@ -13,6 +14,15 @@ df_item = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\
 df_transaction = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Transaction_Dataset.csv')
 df_inventory = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Inventory_Dataset.csv')
 df_campaign = pd.read_csv(r'C:\Users\UNS_CT\OneDrive\เอกสาร\PA6 dataset\PA6 dataset\Campaign_Dataset.csv')
+=======
+# Load datasets
+df_behavioral = pd.read_csv(r'Behavioral_Dataset.csv')
+df_customer = pd.read_csv(r'Customer_Dataset.csv')
+df_item = pd.read_csv(r'Transaction_Items_Dataset.csv')
+df_transaction = pd.read_csv(r'Transaction_Dataset.csv')
+df_inventory = pd.read_csv(r'Inventory_Dataset.csv')
+df_campaign = pd.read_csv(r'Campaign_Dataset.csv')
+>>>>>>> Stashed changes
 
 st.title("Data Overview")
 st.write("Customer Dataset")

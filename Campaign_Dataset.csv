@@ -1,0 +1,2001 @@
+Transaction ID,Promotion Type,Promotional Period
+TXN_0001,No Promotion,
+TXN_0002,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0003,No Promotion,
+TXN_0004,10% Off,2022-10-01 to 2022-10-31
+TXN_0005,No Promotion,
+TXN_0006,No Promotion,
+TXN_0007,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0008,No Promotion,
+TXN_0009,No Promotion,
+TXN_0010,No Promotion,
+TXN_0011,No Promotion,
+TXN_0012,No Promotion,
+TXN_0013,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0014,No Promotion,
+TXN_0015,No Promotion,
+TXN_0016,No Promotion,
+TXN_0017,No Promotion,
+TXN_0018,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0019,No Promotion,
+TXN_0020,No Promotion,
+TXN_0021,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0022,No Promotion,
+TXN_0023,No Promotion,
+TXN_0024,No Promotion,
+TXN_0025,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0026,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0027,No Promotion,
+TXN_0028,No Promotion,
+TXN_0029,No Promotion,
+TXN_0030,10% Off,2024-03-01 to 2024-03-31
+TXN_0031,No Promotion,
+TXN_0032,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0033,10% Off,2024-03-01 to 2024-03-31
+TXN_0034,No Promotion,
+TXN_0035,No Promotion,
+TXN_0036,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0037,No Promotion,
+TXN_0038,No Promotion,
+TXN_0039,No Promotion,
+TXN_0040,No Promotion,
+TXN_0041,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0042,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0043,No Promotion,
+TXN_0044,No Promotion,
+TXN_0045,No Promotion,
+TXN_0046,10% Off,2024-09-01 to 2024-09-15
+TXN_0047,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0048,No Promotion,
+TXN_0049,No Promotion,
+TXN_0050,No Promotion,
+TXN_0051,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0052,No Promotion,
+TXN_0053,No Promotion,
+TXN_0054,No Promotion,
+TXN_0055,No Promotion,
+TXN_0056,10% Off,2022-10-01 to 2022-10-31
+TXN_0057,No Promotion,
+TXN_0058,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0059,No Promotion,
+TXN_0060,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0061,No Promotion,
+TXN_0062,10% Off,2022-10-01 to 2022-10-31
+TXN_0063,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0064,No Promotion,
+TXN_0065,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0066,No Promotion,
+TXN_0067,No Promotion,
+TXN_0068,No Promotion,
+TXN_0069,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0070,No Promotion,
+TXN_0071,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0072,10% Off,2023-02-01 to 2023-02-15
+TXN_0073,No Promotion,
+TXN_0074,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0075,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0076,No Promotion,
+TXN_0077,No Promotion,
+TXN_0078,No Promotion,
+TXN_0079,No Promotion,
+TXN_0080,10% Off,2023-02-01 to 2023-02-15
+TXN_0081,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0082,No Promotion,
+TXN_0083,No Promotion,
+TXN_0084,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0085,10% Off,2023-02-01 to 2023-02-15
+TXN_0086,No Promotion,
+TXN_0087,No Promotion,
+TXN_0088,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0089,No Promotion,
+TXN_0090,No Promotion,
+TXN_0091,No Promotion,
+TXN_0092,No Promotion,
+TXN_0093,10% Off,2023-02-01 to 2023-02-15
+TXN_0094,No Promotion,
+TXN_0095,No Promotion,
+TXN_0096,No Promotion,
+TXN_0097,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0098,No Promotion,
+TXN_0099,10% Off,2024-03-01 to 2024-03-31
+TXN_0100,No Promotion,
+TXN_0101,10% Off,2024-03-01 to 2024-03-31
+TXN_0102,10% Off,2024-03-01 to 2024-03-31
+TXN_0103,No Promotion,
+TXN_0104,No Promotion,
+TXN_0105,No Promotion,
+TXN_0106,No Promotion,
+TXN_0107,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0108,No Promotion,
+TXN_0109,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0110,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0111,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0112,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0113,10% Off,2024-03-01 to 2024-03-31
+TXN_0114,No Promotion,
+TXN_0115,No Promotion,
+TXN_0116,No Promotion,
+TXN_0117,No Promotion,
+TXN_0118,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0119,No Promotion,
+TXN_0120,No Promotion,
+TXN_0121,No Promotion,
+TXN_0122,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0123,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0124,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0125,No Promotion,
+TXN_0126,10% Off,2024-03-01 to 2024-03-31
+TXN_0127,No Promotion,
+TXN_0128,10% Off,2023-02-01 to 2023-02-15
+TXN_0129,No Promotion,
+TXN_0130,No Promotion,
+TXN_0131,No Promotion,
+TXN_0132,No Promotion,
+TXN_0133,No Promotion,
+TXN_0134,10% Off,2022-10-01 to 2022-10-31
+TXN_0135,No Promotion,
+TXN_0136,No Promotion,
+TXN_0137,No Promotion,
+TXN_0138,No Promotion,
+TXN_0139,No Promotion,
+TXN_0140,10% Off,2023-07-01 to 2023-07-15
+TXN_0141,No Promotion,
+TXN_0142,No Promotion,
+TXN_0143,No Promotion,
+TXN_0144,No Promotion,
+TXN_0145,No Promotion,
+TXN_0146,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0147,No Promotion,
+TXN_0148,No Promotion,
+TXN_0149,No Promotion,
+TXN_0150,No Promotion,
+TXN_0151,No Promotion,
+TXN_0152,No Promotion,
+TXN_0153,No Promotion,
+TXN_0154,No Promotion,
+TXN_0155,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0156,No Promotion,
+TXN_0157,No Promotion,
+TXN_0158,No Promotion,
+TXN_0159,No Promotion,
+TXN_0160,No Promotion,
+TXN_0161,No Promotion,
+TXN_0162,10% Off,2022-10-01 to 2022-10-31
+TXN_0163,10% Off,2024-09-01 to 2024-09-15
+TXN_0164,10% Off,2022-10-01 to 2022-10-31
+TXN_0165,No Promotion,
+TXN_0166,No Promotion,
+TXN_0167,10% Off,2024-09-01 to 2024-09-15
+TXN_0168,No Promotion,
+TXN_0169,No Promotion,
+TXN_0170,No Promotion,
+TXN_0171,No Promotion,
+TXN_0172,No Promotion,
+TXN_0173,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0174,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0175,No Promotion,
+TXN_0176,10% Off,2024-03-01 to 2024-03-31
+TXN_0177,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0178,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0179,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0180,No Promotion,
+TXN_0181,No Promotion,
+TXN_0182,No Promotion,
+TXN_0183,No Promotion,
+TXN_0184,No Promotion,
+TXN_0185,No Promotion,
+TXN_0186,No Promotion,
+TXN_0187,No Promotion,
+TXN_0188,No Promotion,
+TXN_0189,No Promotion,
+TXN_0190,No Promotion,
+TXN_0191,No Promotion,
+TXN_0192,No Promotion,
+TXN_0193,10% Off,2024-09-01 to 2024-09-15
+TXN_0194,No Promotion,
+TXN_0195,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0196,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0197,10% Off,2023-07-01 to 2023-07-15
+TXN_0198,No Promotion,
+TXN_0199,No Promotion,
+TXN_0200,No Promotion,
+TXN_0201,No Promotion,
+TXN_0202,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0203,No Promotion,
+TXN_0204,No Promotion,
+TXN_0205,No Promotion,
+TXN_0206,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0207,No Promotion,
+TXN_0208,10% Off,2022-10-01 to 2022-10-31
+TXN_0209,No Promotion,
+TXN_0210,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0211,10% Off,2023-07-01 to 2023-07-15
+TXN_0212,10% Off,2022-10-01 to 2022-10-31
+TXN_0213,No Promotion,
+TXN_0214,No Promotion,
+TXN_0215,No Promotion,
+TXN_0216,10% Off,2024-03-01 to 2024-03-31
+TXN_0217,No Promotion,
+TXN_0218,No Promotion,
+TXN_0219,No Promotion,
+TXN_0220,No Promotion,
+TXN_0221,No Promotion,
+TXN_0222,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0223,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0224,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0225,No Promotion,
+TXN_0226,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0227,No Promotion,
+TXN_0228,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0229,10% Off,2023-07-01 to 2023-07-15
+TXN_0230,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0231,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0232,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0233,No Promotion,
+TXN_0234,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0235,No Promotion,
+TXN_0236,10% Off,2023-07-01 to 2023-07-15
+TXN_0237,No Promotion,
+TXN_0238,10% Off,2024-03-01 to 2024-03-31
+TXN_0239,10% Off,2022-10-01 to 2022-10-31
+TXN_0240,No Promotion,
+TXN_0241,No Promotion,
+TXN_0242,No Promotion,
+TXN_0243,No Promotion,
+TXN_0244,No Promotion,
+TXN_0245,No Promotion,
+TXN_0246,10% Off,2023-02-01 to 2023-02-15
+TXN_0247,No Promotion,
+TXN_0248,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0249,No Promotion,
+TXN_0250,No Promotion,
+TXN_0251,No Promotion,
+TXN_0252,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0253,No Promotion,
+TXN_0254,10% Off,2024-03-01 to 2024-03-31
+TXN_0255,10% Off,2023-07-01 to 2023-07-15
+TXN_0256,No Promotion,
+TXN_0257,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0258,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0259,No Promotion,
+TXN_0260,No Promotion,
+TXN_0261,10% Off,2023-07-01 to 2023-07-15
+TXN_0262,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0263,No Promotion,
+TXN_0264,10% Off,2024-03-01 to 2024-03-31
+TXN_0265,No Promotion,
+TXN_0266,No Promotion,
+TXN_0267,No Promotion,
+TXN_0268,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0269,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0270,No Promotion,
+TXN_0271,10% Off,2024-03-01 to 2024-03-31
+TXN_0272,No Promotion,
+TXN_0273,No Promotion,
+TXN_0274,10% Off,2023-02-01 to 2023-02-15
+TXN_0275,No Promotion,
+TXN_0276,No Promotion,
+TXN_0277,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0278,No Promotion,
+TXN_0279,No Promotion,
+TXN_0280,No Promotion,
+TXN_0281,No Promotion,
+TXN_0282,No Promotion,
+TXN_0283,No Promotion,
+TXN_0284,No Promotion,
+TXN_0285,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0286,No Promotion,
+TXN_0287,No Promotion,
+TXN_0288,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0289,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0290,No Promotion,
+TXN_0291,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0292,No Promotion,
+TXN_0293,No Promotion,
+TXN_0294,10% Off,2024-03-01 to 2024-03-31
+TXN_0295,No Promotion,
+TXN_0296,10% Off,2024-03-01 to 2024-03-31
+TXN_0297,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0298,No Promotion,
+TXN_0299,No Promotion,
+TXN_0300,No Promotion,
+TXN_0301,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0302,10% Off,2023-02-01 to 2023-02-15
+TXN_0303,No Promotion,
+TXN_0304,No Promotion,
+TXN_0305,No Promotion,
+TXN_0306,10% Off,2024-03-01 to 2024-03-31
+TXN_0307,No Promotion,
+TXN_0308,No Promotion,
+TXN_0309,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0310,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0311,10% Off,2022-10-01 to 2022-10-31
+TXN_0312,No Promotion,
+TXN_0313,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0314,No Promotion,
+TXN_0315,No Promotion,
+TXN_0316,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0317,No Promotion,
+TXN_0318,No Promotion,
+TXN_0319,No Promotion,
+TXN_0320,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0321,No Promotion,
+TXN_0322,No Promotion,
+TXN_0323,No Promotion,
+TXN_0324,No Promotion,
+TXN_0325,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0326,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0327,10% Off,2024-03-01 to 2024-03-31
+TXN_0328,No Promotion,
+TXN_0329,No Promotion,
+TXN_0330,10% Off,2024-09-01 to 2024-09-15
+TXN_0331,No Promotion,
+TXN_0332,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0333,10% Off,2022-10-01 to 2022-10-31
+TXN_0334,No Promotion,
+TXN_0335,10% Off,2024-03-01 to 2024-03-31
+TXN_0336,10% Off,2023-02-01 to 2023-02-15
+TXN_0337,No Promotion,
+TXN_0338,No Promotion,
+TXN_0339,10% Off,2024-09-01 to 2024-09-15
+TXN_0340,No Promotion,
+TXN_0341,No Promotion,
+TXN_0342,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0343,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0344,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0345,No Promotion,
+TXN_0346,10% Off,2024-03-01 to 2024-03-31
+TXN_0347,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0348,No Promotion,
+TXN_0349,No Promotion,
+TXN_0350,No Promotion,
+TXN_0351,No Promotion,
+TXN_0352,No Promotion,
+TXN_0353,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0354,10% Off,2022-10-01 to 2022-10-31
+TXN_0355,No Promotion,
+TXN_0356,No Promotion,
+TXN_0357,No Promotion,
+TXN_0358,No Promotion,
+TXN_0359,No Promotion,
+TXN_0360,10% Off,2023-02-01 to 2023-02-15
+TXN_0361,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0362,No Promotion,
+TXN_0363,No Promotion,
+TXN_0364,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0365,No Promotion,
+TXN_0366,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0367,10% Off,2023-02-01 to 2023-02-15
+TXN_0368,No Promotion,
+TXN_0369,10% Off,2023-07-01 to 2023-07-15
+TXN_0370,No Promotion,
+TXN_0371,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0372,No Promotion,
+TXN_0373,No Promotion,
+TXN_0374,No Promotion,
+TXN_0375,No Promotion,
+TXN_0376,No Promotion,
+TXN_0377,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0378,No Promotion,
+TXN_0379,10% Off,2024-03-01 to 2024-03-31
+TXN_0380,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0381,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0382,No Promotion,
+TXN_0383,10% Off,2022-10-01 to 2022-10-31
+TXN_0384,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0385,No Promotion,
+TXN_0386,No Promotion,
+TXN_0387,No Promotion,
+TXN_0388,No Promotion,
+TXN_0389,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0390,No Promotion,
+TXN_0391,No Promotion,
+TXN_0392,10% Off,2024-09-01 to 2024-09-15
+TXN_0393,No Promotion,
+TXN_0394,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0395,No Promotion,
+TXN_0396,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0397,No Promotion,
+TXN_0398,No Promotion,
+TXN_0399,No Promotion,
+TXN_0400,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0401,No Promotion,
+TXN_0402,No Promotion,
+TXN_0403,No Promotion,
+TXN_0404,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0405,No Promotion,
+TXN_0406,10% Off,2024-03-01 to 2024-03-31
+TXN_0407,No Promotion,
+TXN_0408,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0409,10% Off,2022-10-01 to 2022-10-31
+TXN_0410,No Promotion,
+TXN_0411,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0412,No Promotion,
+TXN_0413,10% Off,2023-02-01 to 2023-02-15
+TXN_0414,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0415,No Promotion,
+TXN_0416,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0417,10% Off,2022-10-01 to 2022-10-31
+TXN_0418,No Promotion,
+TXN_0419,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0420,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0421,No Promotion,
+TXN_0422,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0423,No Promotion,
+TXN_0424,No Promotion,
+TXN_0425,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0426,No Promotion,
+TXN_0427,No Promotion,
+TXN_0428,No Promotion,
+TXN_0429,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0430,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0431,No Promotion,
+TXN_0432,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0433,10% Off,2024-03-01 to 2024-03-31
+TXN_0434,10% Off,2024-03-01 to 2024-03-31
+TXN_0435,No Promotion,
+TXN_0436,No Promotion,
+TXN_0437,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0438,10% Off,2024-09-01 to 2024-09-15
+TXN_0439,No Promotion,
+TXN_0440,No Promotion,
+TXN_0441,No Promotion,
+TXN_0442,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0443,No Promotion,
+TXN_0444,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0445,No Promotion,
+TXN_0446,No Promotion,
+TXN_0447,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0448,No Promotion,
+TXN_0449,No Promotion,
+TXN_0450,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0451,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0452,No Promotion,
+TXN_0453,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0454,No Promotion,
+TXN_0455,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0456,10% Off,2023-07-01 to 2023-07-15
+TXN_0457,No Promotion,
+TXN_0458,No Promotion,
+TXN_0459,No Promotion,
+TXN_0460,No Promotion,
+TXN_0461,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0462,No Promotion,
+TXN_0463,No Promotion,
+TXN_0464,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0465,No Promotion,
+TXN_0466,No Promotion,
+TXN_0467,10% Off,2024-03-01 to 2024-03-31
+TXN_0468,No Promotion,
+TXN_0469,No Promotion,
+TXN_0470,No Promotion,
+TXN_0471,No Promotion,
+TXN_0472,10% Off,2024-03-01 to 2024-03-31
+TXN_0473,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0474,No Promotion,
+TXN_0475,No Promotion,
+TXN_0476,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0477,No Promotion,
+TXN_0478,No Promotion,
+TXN_0479,No Promotion,
+TXN_0480,No Promotion,
+TXN_0481,No Promotion,
+TXN_0482,No Promotion,
+TXN_0483,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0484,No Promotion,
+TXN_0485,No Promotion,
+TXN_0486,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0487,No Promotion,
+TXN_0488,No Promotion,
+TXN_0489,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0490,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0491,No Promotion,
+TXN_0492,No Promotion,
+TXN_0493,No Promotion,
+TXN_0494,No Promotion,
+TXN_0495,No Promotion,
+TXN_0496,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0497,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0498,10% Off,2023-07-01 to 2023-07-15
+TXN_0499,No Promotion,
+TXN_0500,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0501,No Promotion,
+TXN_0502,No Promotion,
+TXN_0503,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0504,No Promotion,
+TXN_0505,10% Off,2022-10-01 to 2022-10-31
+TXN_0506,No Promotion,
+TXN_0507,No Promotion,
+TXN_0508,No Promotion,
+TXN_0509,No Promotion,
+TXN_0510,10% Off,2022-10-01 to 2022-10-31
+TXN_0511,No Promotion,
+TXN_0512,10% Off,2022-10-01 to 2022-10-31
+TXN_0513,No Promotion,
+TXN_0514,10% Off,2023-07-01 to 2023-07-15
+TXN_0515,No Promotion,
+TXN_0516,No Promotion,
+TXN_0517,No Promotion,
+TXN_0518,No Promotion,
+TXN_0519,No Promotion,
+TXN_0520,No Promotion,
+TXN_0521,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0522,No Promotion,
+TXN_0523,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0524,No Promotion,
+TXN_0525,No Promotion,
+TXN_0526,No Promotion,
+TXN_0527,No Promotion,
+TXN_0528,10% Off,2022-10-01 to 2022-10-31
+TXN_0529,No Promotion,
+TXN_0530,No Promotion,
+TXN_0531,No Promotion,
+TXN_0532,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0533,No Promotion,
+TXN_0534,No Promotion,
+TXN_0535,No Promotion,
+TXN_0536,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0537,No Promotion,
+TXN_0538,10% Off,2022-10-01 to 2022-10-31
+TXN_0539,No Promotion,
+TXN_0540,No Promotion,
+TXN_0541,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0542,No Promotion,
+TXN_0543,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0544,10% Off,2023-07-01 to 2023-07-15
+TXN_0545,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0546,No Promotion,
+TXN_0547,10% Off,2024-09-01 to 2024-09-15
+TXN_0548,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0549,No Promotion,
+TXN_0550,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0551,No Promotion,
+TXN_0552,No Promotion,
+TXN_0553,No Promotion,
+TXN_0554,No Promotion,
+TXN_0555,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0556,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0557,10% Off,2024-03-01 to 2024-03-31
+TXN_0558,No Promotion,
+TXN_0559,No Promotion,
+TXN_0560,10% Off,2023-07-01 to 2023-07-15
+TXN_0561,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0562,10% Off,2023-07-01 to 2023-07-15
+TXN_0563,10% Off,2024-03-01 to 2024-03-31
+TXN_0564,10% Off,2022-10-01 to 2022-10-31
+TXN_0565,10% Off,2023-07-01 to 2023-07-15
+TXN_0566,No Promotion,
+TXN_0567,10% Off,2022-10-01 to 2022-10-31
+TXN_0568,No Promotion,
+TXN_0569,No Promotion,
+TXN_0570,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0571,No Promotion,
+TXN_0572,10% Off,2024-09-01 to 2024-09-15
+TXN_0573,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0574,No Promotion,
+TXN_0575,No Promotion,
+TXN_0576,10% Off,2024-03-01 to 2024-03-31
+TXN_0577,10% Off,2022-10-01 to 2022-10-31
+TXN_0578,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0579,No Promotion,
+TXN_0580,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0581,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0582,No Promotion,
+TXN_0583,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0584,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0585,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0586,No Promotion,
+TXN_0587,No Promotion,
+TXN_0588,No Promotion,
+TXN_0589,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0590,10% Off,2024-03-01 to 2024-03-31
+TXN_0591,No Promotion,
+TXN_0592,No Promotion,
+TXN_0593,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0594,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0595,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0596,10% Off,2022-10-01 to 2022-10-31
+TXN_0597,No Promotion,
+TXN_0598,No Promotion,
+TXN_0599,No Promotion,
+TXN_0600,No Promotion,
+TXN_0601,No Promotion,
+TXN_0602,No Promotion,
+TXN_0603,10% Off,2022-10-01 to 2022-10-31
+TXN_0604,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0605,No Promotion,
+TXN_0606,No Promotion,
+TXN_0607,No Promotion,
+TXN_0608,No Promotion,
+TXN_0609,No Promotion,
+TXN_0610,No Promotion,
+TXN_0611,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0612,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0613,No Promotion,
+TXN_0614,10% Off,2024-09-01 to 2024-09-15
+TXN_0615,10% Off,2024-03-01 to 2024-03-31
+TXN_0616,No Promotion,
+TXN_0617,10% Off,2022-10-01 to 2022-10-31
+TXN_0618,No Promotion,
+TXN_0619,No Promotion,
+TXN_0620,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0621,No Promotion,
+TXN_0622,No Promotion,
+TXN_0623,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0624,No Promotion,
+TXN_0625,10% Off,2023-07-01 to 2023-07-15
+TXN_0626,No Promotion,
+TXN_0627,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0628,No Promotion,
+TXN_0629,No Promotion,
+TXN_0630,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0631,No Promotion,
+TXN_0632,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0633,No Promotion,
+TXN_0634,10% Off,2024-03-01 to 2024-03-31
+TXN_0635,No Promotion,
+TXN_0636,No Promotion,
+TXN_0637,No Promotion,
+TXN_0638,No Promotion,
+TXN_0639,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0640,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0641,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0642,No Promotion,
+TXN_0643,No Promotion,
+TXN_0644,No Promotion,
+TXN_0645,No Promotion,
+TXN_0646,10% Off,2024-09-01 to 2024-09-15
+TXN_0647,10% Off,2024-09-01 to 2024-09-15
+TXN_0648,No Promotion,
+TXN_0649,No Promotion,
+TXN_0650,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0651,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0652,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0653,10% Off,2024-03-01 to 2024-03-31
+TXN_0654,10% Off,2024-03-01 to 2024-03-31
+TXN_0655,10% Off,2023-07-01 to 2023-07-15
+TXN_0656,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0657,No Promotion,
+TXN_0658,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0659,No Promotion,
+TXN_0660,No Promotion,
+TXN_0661,No Promotion,
+TXN_0662,No Promotion,
+TXN_0663,No Promotion,
+TXN_0664,No Promotion,
+TXN_0665,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0666,No Promotion,
+TXN_0667,No Promotion,
+TXN_0668,No Promotion,
+TXN_0669,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0670,10% Off,2024-09-01 to 2024-09-15
+TXN_0671,10% Off,2024-03-01 to 2024-03-31
+TXN_0672,No Promotion,
+TXN_0673,No Promotion,
+TXN_0674,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0675,No Promotion,
+TXN_0676,10% Off,2024-03-01 to 2024-03-31
+TXN_0677,No Promotion,
+TXN_0678,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0679,No Promotion,
+TXN_0680,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0681,No Promotion,
+TXN_0682,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0683,No Promotion,
+TXN_0684,No Promotion,
+TXN_0685,No Promotion,
+TXN_0686,No Promotion,
+TXN_0687,No Promotion,
+TXN_0688,No Promotion,
+TXN_0689,No Promotion,
+TXN_0690,No Promotion,
+TXN_0691,No Promotion,
+TXN_0692,10% Off,2024-03-01 to 2024-03-31
+TXN_0693,10% Off,2024-03-01 to 2024-03-31
+TXN_0694,No Promotion,
+TXN_0695,No Promotion,
+TXN_0696,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0697,No Promotion,
+TXN_0698,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0699,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0700,No Promotion,
+TXN_0701,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0702,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0703,No Promotion,
+TXN_0704,No Promotion,
+TXN_0705,10% Off,2022-10-01 to 2022-10-31
+TXN_0706,No Promotion,
+TXN_0707,No Promotion,
+TXN_0708,No Promotion,
+TXN_0709,No Promotion,
+TXN_0710,No Promotion,
+TXN_0711,No Promotion,
+TXN_0712,No Promotion,
+TXN_0713,No Promotion,
+TXN_0714,No Promotion,
+TXN_0715,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0716,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0717,No Promotion,
+TXN_0718,No Promotion,
+TXN_0719,No Promotion,
+TXN_0720,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0721,No Promotion,
+TXN_0722,10% Off,2024-03-01 to 2024-03-31
+TXN_0723,No Promotion,
+TXN_0724,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0725,No Promotion,
+TXN_0726,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0727,No Promotion,
+TXN_0728,No Promotion,
+TXN_0729,No Promotion,
+TXN_0730,10% Off,2022-10-01 to 2022-10-31
+TXN_0731,No Promotion,
+TXN_0732,No Promotion,
+TXN_0733,10% Off,2022-10-01 to 2022-10-31
+TXN_0734,No Promotion,
+TXN_0735,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0736,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0737,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0738,10% Off,2024-09-01 to 2024-09-15
+TXN_0739,No Promotion,
+TXN_0740,No Promotion,
+TXN_0741,No Promotion,
+TXN_0742,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0743,No Promotion,
+TXN_0744,No Promotion,
+TXN_0745,No Promotion,
+TXN_0746,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0747,No Promotion,
+TXN_0748,No Promotion,
+TXN_0749,No Promotion,
+TXN_0750,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0751,No Promotion,
+TXN_0752,No Promotion,
+TXN_0753,No Promotion,
+TXN_0754,No Promotion,
+TXN_0755,No Promotion,
+TXN_0756,No Promotion,
+TXN_0757,No Promotion,
+TXN_0758,No Promotion,
+TXN_0759,No Promotion,
+TXN_0760,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0761,10% Off,2024-03-01 to 2024-03-31
+TXN_0762,No Promotion,
+TXN_0763,10% Off,2024-03-01 to 2024-03-31
+TXN_0764,No Promotion,
+TXN_0765,No Promotion,
+TXN_0766,No Promotion,
+TXN_0767,No Promotion,
+TXN_0768,No Promotion,
+TXN_0769,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0770,No Promotion,
+TXN_0771,No Promotion,
+TXN_0772,No Promotion,
+TXN_0773,No Promotion,
+TXN_0774,No Promotion,
+TXN_0775,No Promotion,
+TXN_0776,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0777,No Promotion,
+TXN_0778,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0779,10% Off,2022-10-01 to 2022-10-31
+TXN_0780,10% Off,2023-07-01 to 2023-07-15
+TXN_0781,No Promotion,
+TXN_0782,No Promotion,
+TXN_0783,No Promotion,
+TXN_0784,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0785,No Promotion,
+TXN_0786,No Promotion,
+TXN_0787,No Promotion,
+TXN_0788,No Promotion,
+TXN_0789,No Promotion,
+TXN_0790,10% Off,2022-10-01 to 2022-10-31
+TXN_0791,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0792,No Promotion,
+TXN_0793,No Promotion,
+TXN_0794,No Promotion,
+TXN_0795,10% Off,2024-03-01 to 2024-03-31
+TXN_0796,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0797,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0798,No Promotion,
+TXN_0799,10% Off,2024-09-01 to 2024-09-15
+TXN_0800,10% Off,2024-03-01 to 2024-03-31
+TXN_0801,No Promotion,
+TXN_0802,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0803,No Promotion,
+TXN_0804,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0805,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0806,No Promotion,
+TXN_0807,No Promotion,
+TXN_0808,No Promotion,
+TXN_0809,No Promotion,
+TXN_0810,No Promotion,
+TXN_0811,No Promotion,
+TXN_0812,10% Off,2023-02-01 to 2023-02-15
+TXN_0813,10% Off,2024-03-01 to 2024-03-31
+TXN_0814,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0815,No Promotion,
+TXN_0816,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0817,10% Off,2022-10-01 to 2022-10-31
+TXN_0818,No Promotion,
+TXN_0819,No Promotion,
+TXN_0820,No Promotion,
+TXN_0821,No Promotion,
+TXN_0822,No Promotion,
+TXN_0823,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0824,No Promotion,
+TXN_0825,No Promotion,
+TXN_0826,10% Off,2022-10-01 to 2022-10-31
+TXN_0827,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0828,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0829,No Promotion,
+TXN_0830,No Promotion,
+TXN_0831,No Promotion,
+TXN_0832,No Promotion,
+TXN_0833,No Promotion,
+TXN_0834,10% Off,2024-03-01 to 2024-03-31
+TXN_0835,No Promotion,
+TXN_0836,No Promotion,
+TXN_0837,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0838,No Promotion,
+TXN_0839,No Promotion,
+TXN_0840,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0841,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0842,No Promotion,
+TXN_0843,No Promotion,
+TXN_0844,10% Off,2023-02-01 to 2023-02-15
+TXN_0845,10% Off,2023-02-01 to 2023-02-15
+TXN_0846,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0847,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0848,No Promotion,
+TXN_0849,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0850,No Promotion,
+TXN_0851,No Promotion,
+TXN_0852,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0853,10% Off,2024-03-01 to 2024-03-31
+TXN_0854,10% Off,2022-10-01 to 2022-10-31
+TXN_0855,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0856,No Promotion,
+TXN_0857,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0858,No Promotion,
+TXN_0859,No Promotion,
+TXN_0860,No Promotion,
+TXN_0861,No Promotion,
+TXN_0862,10% Off,2024-09-01 to 2024-09-15
+TXN_0863,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0864,No Promotion,
+TXN_0865,No Promotion,
+TXN_0866,No Promotion,
+TXN_0867,No Promotion,
+TXN_0868,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0869,No Promotion,
+TXN_0870,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0871,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0872,No Promotion,
+TXN_0873,No Promotion,
+TXN_0874,No Promotion,
+TXN_0875,No Promotion,
+TXN_0876,No Promotion,
+TXN_0877,No Promotion,
+TXN_0878,No Promotion,
+TXN_0879,10% Off,2022-10-01 to 2022-10-31
+TXN_0880,No Promotion,
+TXN_0881,No Promotion,
+TXN_0882,No Promotion,
+TXN_0883,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0884,No Promotion,
+TXN_0885,No Promotion,
+TXN_0886,No Promotion,
+TXN_0887,No Promotion,
+TXN_0888,No Promotion,
+TXN_0889,No Promotion,
+TXN_0890,No Promotion,
+TXN_0891,No Promotion,
+TXN_0892,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0893,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0894,No Promotion,
+TXN_0895,10% Off,2024-03-01 to 2024-03-31
+TXN_0896,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0897,10% Off,2023-02-01 to 2023-02-15
+TXN_0898,No Promotion,
+TXN_0899,No Promotion,
+TXN_0900,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0901,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0902,10% Off,2022-10-01 to 2022-10-31
+TXN_0903,No Promotion,
+TXN_0904,No Promotion,
+TXN_0905,No Promotion,
+TXN_0906,No Promotion,
+TXN_0907,10% Off,2023-07-01 to 2023-07-15
+TXN_0908,No Promotion,
+TXN_0909,No Promotion,
+TXN_0910,No Promotion,
+TXN_0911,No Promotion,
+TXN_0912,10% Off,2023-07-01 to 2023-07-15
+TXN_0913,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0914,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0915,No Promotion,
+TXN_0916,10% Off,2024-09-01 to 2024-09-15
+TXN_0917,No Promotion,
+TXN_0918,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0919,Free Shipping,2023-09-15 to 2023-09-30
+TXN_0920,No Promotion,
+TXN_0921,No Promotion,
+TXN_0922,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0923,No Promotion,
+TXN_0924,No Promotion,
+TXN_0925,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0926,No Promotion,
+TXN_0927,No Promotion,
+TXN_0928,No Promotion,
+TXN_0929,No Promotion,
+TXN_0930,No Promotion,
+TXN_0931,No Promotion,
+TXN_0932,10% Off,2024-03-01 to 2024-03-31
+TXN_0933,No Promotion,
+TXN_0934,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0935,10% Off,2023-07-01 to 2023-07-15
+TXN_0936,No Promotion,
+TXN_0937,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0938,No Promotion,
+TXN_0939,No Promotion,
+TXN_0940,No Promotion,
+TXN_0941,10% Off,2023-02-01 to 2023-02-15
+TXN_0942,No Promotion,
+TXN_0943,No Promotion,
+TXN_0944,No Promotion,
+TXN_0945,No Promotion,
+TXN_0946,No Promotion,
+TXN_0947,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_0948,No Promotion,
+TXN_0949,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0950,10% Off,2022-10-01 to 2022-10-31
+TXN_0951,No Promotion,
+TXN_0952,No Promotion,
+TXN_0953,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0954,No Promotion,
+TXN_0955,No Promotion,
+TXN_0956,No Promotion,
+TXN_0957,10% Off,2024-03-01 to 2024-03-31
+TXN_0958,No Promotion,
+TXN_0959,10% Off,2024-03-01 to 2024-03-31
+TXN_0960,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0961,No Promotion,
+TXN_0962,10% Off,2022-10-01 to 2022-10-31
+TXN_0963,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0964,No Promotion,
+TXN_0965,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0966,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0967,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_0968,10% Off,2022-10-01 to 2022-10-31
+TXN_0969,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_0970,No Promotion,
+TXN_0971,10% Off,2022-10-01 to 2022-10-31
+TXN_0972,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0973,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0974,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_0975,10% Off,2024-03-01 to 2024-03-31
+TXN_0976,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0977,No Promotion,
+TXN_0978,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_0979,Free Shipping,2024-07-01 to 2024-07-15
+TXN_0980,Free Shipping,2022-09-01 to 2022-09-30
+TXN_0981,No Promotion,
+TXN_0982,No Promotion,
+TXN_0983,Free Shipping,2023-10-01 to 2023-10-15
+TXN_0984,10% Off,2022-10-01 to 2022-10-31
+TXN_0985,10% Off,2024-03-01 to 2024-03-31
+TXN_0986,No Promotion,
+TXN_0987,No Promotion,
+TXN_0988,No Promotion,
+TXN_0989,10% Off,2024-03-01 to 2024-03-31
+TXN_0990,No Promotion,
+TXN_0991,No Promotion,
+TXN_0992,No Promotion,
+TXN_0993,No Promotion,
+TXN_0994,No Promotion,
+TXN_0995,No Promotion,
+TXN_0996,No Promotion,
+TXN_0997,10% Off,2022-10-01 to 2022-10-31
+TXN_0998,No Promotion,
+TXN_0999,No Promotion,
+TXN_1000,No Promotion,
+TXN_1001,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1002,10% Off,2022-10-01 to 2022-10-31
+TXN_1003,No Promotion,
+TXN_1004,No Promotion,
+TXN_1005,10% Off,2024-09-01 to 2024-09-15
+TXN_1006,No Promotion,
+TXN_1007,No Promotion,
+TXN_1008,No Promotion,
+TXN_1009,No Promotion,
+TXN_1010,No Promotion,
+TXN_1011,No Promotion,
+TXN_1012,No Promotion,
+TXN_1013,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1014,No Promotion,
+TXN_1015,No Promotion,
+TXN_1016,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1017,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1018,No Promotion,
+TXN_1019,No Promotion,
+TXN_1020,No Promotion,
+TXN_1021,10% Off,2024-03-01 to 2024-03-31
+TXN_1022,No Promotion,
+TXN_1023,No Promotion,
+TXN_1024,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1025,No Promotion,
+TXN_1026,No Promotion,
+TXN_1027,No Promotion,
+TXN_1028,10% Off,2022-10-01 to 2022-10-31
+TXN_1029,No Promotion,
+TXN_1030,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1031,No Promotion,
+TXN_1032,No Promotion,
+TXN_1033,No Promotion,
+TXN_1034,No Promotion,
+TXN_1035,No Promotion,
+TXN_1036,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1037,10% Off,2022-10-01 to 2022-10-31
+TXN_1038,No Promotion,
+TXN_1039,No Promotion,
+TXN_1040,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1041,10% Off,2023-07-01 to 2023-07-15
+TXN_1042,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1043,No Promotion,
+TXN_1044,No Promotion,
+TXN_1045,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1046,No Promotion,
+TXN_1047,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1048,No Promotion,
+TXN_1049,No Promotion,
+TXN_1050,No Promotion,
+TXN_1051,No Promotion,
+TXN_1052,No Promotion,
+TXN_1053,No Promotion,
+TXN_1054,No Promotion,
+TXN_1055,10% Off,2023-07-01 to 2023-07-15
+TXN_1056,No Promotion,
+TXN_1057,No Promotion,
+TXN_1058,No Promotion,
+TXN_1059,No Promotion,
+TXN_1060,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1061,No Promotion,
+TXN_1062,No Promotion,
+TXN_1063,10% Off,2024-09-01 to 2024-09-15
+TXN_1064,No Promotion,
+TXN_1065,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1066,10% Off,2023-02-01 to 2023-02-15
+TXN_1067,No Promotion,
+TXN_1068,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1069,No Promotion,
+TXN_1070,10% Off,2022-10-01 to 2022-10-31
+TXN_1071,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1072,No Promotion,
+TXN_1073,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1074,No Promotion,
+TXN_1075,No Promotion,
+TXN_1076,No Promotion,
+TXN_1077,10% Off,2022-10-01 to 2022-10-31
+TXN_1078,10% Off,2022-10-01 to 2022-10-31
+TXN_1079,No Promotion,
+TXN_1080,No Promotion,
+TXN_1081,No Promotion,
+TXN_1082,No Promotion,
+TXN_1083,No Promotion,
+TXN_1084,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1085,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1086,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1087,No Promotion,
+TXN_1088,10% Off,2022-10-01 to 2022-10-31
+TXN_1089,No Promotion,
+TXN_1090,No Promotion,
+TXN_1091,No Promotion,
+TXN_1092,No Promotion,
+TXN_1093,No Promotion,
+TXN_1094,No Promotion,
+TXN_1095,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1096,No Promotion,
+TXN_1097,No Promotion,
+TXN_1098,No Promotion,
+TXN_1099,No Promotion,
+TXN_1100,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1101,10% Off,2024-09-01 to 2024-09-15
+TXN_1102,No Promotion,
+TXN_1103,No Promotion,
+TXN_1104,No Promotion,
+TXN_1105,No Promotion,
+TXN_1106,No Promotion,
+TXN_1107,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1108,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1109,No Promotion,
+TXN_1110,No Promotion,
+TXN_1111,10% Off,2023-02-01 to 2023-02-15
+TXN_1112,10% Off,2022-10-01 to 2022-10-31
+TXN_1113,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1114,No Promotion,
+TXN_1115,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1116,No Promotion,
+TXN_1117,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1118,No Promotion,
+TXN_1119,10% Off,2023-02-01 to 2023-02-15
+TXN_1120,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1121,No Promotion,
+TXN_1122,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1123,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1124,10% Off,2024-03-01 to 2024-03-31
+TXN_1125,No Promotion,
+TXN_1126,No Promotion,
+TXN_1127,No Promotion,
+TXN_1128,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1129,No Promotion,
+TXN_1130,No Promotion,
+TXN_1131,10% Off,2024-03-01 to 2024-03-31
+TXN_1132,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1133,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1134,No Promotion,
+TXN_1135,10% Off,2022-10-01 to 2022-10-31
+TXN_1136,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1137,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1138,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1139,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1140,No Promotion,
+TXN_1141,No Promotion,
+TXN_1142,10% Off,2024-09-01 to 2024-09-15
+TXN_1143,No Promotion,
+TXN_1144,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1145,No Promotion,
+TXN_1146,10% Off,2022-10-01 to 2022-10-31
+TXN_1147,10% Off,2023-02-01 to 2023-02-15
+TXN_1148,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1149,No Promotion,
+TXN_1150,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1151,10% Off,2024-03-01 to 2024-03-31
+TXN_1152,No Promotion,
+TXN_1153,No Promotion,
+TXN_1154,No Promotion,
+TXN_1155,10% Off,2023-02-01 to 2023-02-15
+TXN_1156,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1157,No Promotion,
+TXN_1158,No Promotion,
+TXN_1159,No Promotion,
+TXN_1160,No Promotion,
+TXN_1161,10% Off,2022-10-01 to 2022-10-31
+TXN_1162,No Promotion,
+TXN_1163,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1164,No Promotion,
+TXN_1165,No Promotion,
+TXN_1166,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1167,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1168,No Promotion,
+TXN_1169,No Promotion,
+TXN_1170,No Promotion,
+TXN_1171,No Promotion,
+TXN_1172,10% Off,2024-03-01 to 2024-03-31
+TXN_1173,10% Off,2024-03-01 to 2024-03-31
+TXN_1174,No Promotion,
+TXN_1175,No Promotion,
+TXN_1176,No Promotion,
+TXN_1177,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1178,No Promotion,
+TXN_1179,10% Off,2023-02-01 to 2023-02-15
+TXN_1180,No Promotion,
+TXN_1181,No Promotion,
+TXN_1182,No Promotion,
+TXN_1183,10% Off,2024-09-01 to 2024-09-15
+TXN_1184,No Promotion,
+TXN_1185,10% Off,2024-09-01 to 2024-09-15
+TXN_1186,No Promotion,
+TXN_1187,No Promotion,
+TXN_1188,No Promotion,
+TXN_1189,No Promotion,
+TXN_1190,No Promotion,
+TXN_1191,10% Off,2024-09-01 to 2024-09-15
+TXN_1192,No Promotion,
+TXN_1193,No Promotion,
+TXN_1194,No Promotion,
+TXN_1195,No Promotion,
+TXN_1196,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1197,10% Off,2023-02-01 to 2023-02-15
+TXN_1198,No Promotion,
+TXN_1199,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1200,No Promotion,
+TXN_1201,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1202,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1203,No Promotion,
+TXN_1204,No Promotion,
+TXN_1205,No Promotion,
+TXN_1206,No Promotion,
+TXN_1207,No Promotion,
+TXN_1208,No Promotion,
+TXN_1209,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1210,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1211,No Promotion,
+TXN_1212,No Promotion,
+TXN_1213,No Promotion,
+TXN_1214,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1215,No Promotion,
+TXN_1216,No Promotion,
+TXN_1217,No Promotion,
+TXN_1218,No Promotion,
+TXN_1219,No Promotion,
+TXN_1220,No Promotion,
+TXN_1221,No Promotion,
+TXN_1222,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1223,No Promotion,
+TXN_1224,No Promotion,
+TXN_1225,No Promotion,
+TXN_1226,No Promotion,
+TXN_1227,No Promotion,
+TXN_1228,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1229,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1230,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1231,No Promotion,
+TXN_1232,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1233,No Promotion,
+TXN_1234,10% Off,2023-07-01 to 2023-07-15
+TXN_1235,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1236,No Promotion,
+TXN_1237,10% Off,2022-10-01 to 2022-10-31
+TXN_1238,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1239,No Promotion,
+TXN_1240,No Promotion,
+TXN_1241,No Promotion,
+TXN_1242,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1243,No Promotion,
+TXN_1244,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1245,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1246,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1247,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1248,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1249,No Promotion,
+TXN_1250,No Promotion,
+TXN_1251,No Promotion,
+TXN_1252,No Promotion,
+TXN_1253,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1254,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1255,10% Off,2024-03-01 to 2024-03-31
+TXN_1256,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1257,10% Off,2023-02-01 to 2023-02-15
+TXN_1258,No Promotion,
+TXN_1259,10% Off,2024-03-01 to 2024-03-31
+TXN_1260,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1261,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1262,No Promotion,
+TXN_1263,No Promotion,
+TXN_1264,No Promotion,
+TXN_1265,No Promotion,
+TXN_1266,No Promotion,
+TXN_1267,10% Off,2023-02-01 to 2023-02-15
+TXN_1268,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1269,No Promotion,
+TXN_1270,No Promotion,
+TXN_1271,No Promotion,
+TXN_1272,No Promotion,
+TXN_1273,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1274,No Promotion,
+TXN_1275,No Promotion,
+TXN_1276,No Promotion,
+TXN_1277,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1278,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1279,10% Off,2023-02-01 to 2023-02-15
+TXN_1280,No Promotion,
+TXN_1281,No Promotion,
+TXN_1282,No Promotion,
+TXN_1283,No Promotion,
+TXN_1284,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1285,No Promotion,
+TXN_1286,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1287,No Promotion,
+TXN_1288,No Promotion,
+TXN_1289,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1290,No Promotion,
+TXN_1291,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1292,No Promotion,
+TXN_1293,No Promotion,
+TXN_1294,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1295,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1296,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1297,No Promotion,
+TXN_1298,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1299,No Promotion,
+TXN_1300,No Promotion,
+TXN_1301,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1302,No Promotion,
+TXN_1303,No Promotion,
+TXN_1304,No Promotion,
+TXN_1305,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1306,No Promotion,
+TXN_1307,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1308,No Promotion,
+TXN_1309,10% Off,2022-10-01 to 2022-10-31
+TXN_1310,No Promotion,
+TXN_1311,No Promotion,
+TXN_1312,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1313,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1314,10% Off,2024-03-01 to 2024-03-31
+TXN_1315,No Promotion,
+TXN_1316,10% Off,2022-10-01 to 2022-10-31
+TXN_1317,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1318,No Promotion,
+TXN_1319,No Promotion,
+TXN_1320,10% Off,2024-03-01 to 2024-03-31
+TXN_1321,No Promotion,
+TXN_1322,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1323,No Promotion,
+TXN_1324,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1325,10% Off,2022-10-01 to 2022-10-31
+TXN_1326,No Promotion,
+TXN_1327,No Promotion,
+TXN_1328,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1329,10% Off,2024-09-01 to 2024-09-15
+TXN_1330,No Promotion,
+TXN_1331,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1332,No Promotion,
+TXN_1333,No Promotion,
+TXN_1334,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1335,No Promotion,
+TXN_1336,10% Off,2023-02-01 to 2023-02-15
+TXN_1337,No Promotion,
+TXN_1338,No Promotion,
+TXN_1339,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1340,No Promotion,
+TXN_1341,No Promotion,
+TXN_1342,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1343,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1344,No Promotion,
+TXN_1345,No Promotion,
+TXN_1346,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1347,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1348,No Promotion,
+TXN_1349,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1350,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1351,No Promotion,
+TXN_1352,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1353,No Promotion,
+TXN_1354,No Promotion,
+TXN_1355,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1356,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1357,No Promotion,
+TXN_1358,No Promotion,
+TXN_1359,No Promotion,
+TXN_1360,No Promotion,
+TXN_1361,No Promotion,
+TXN_1362,10% Off,2024-03-01 to 2024-03-31
+TXN_1363,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1364,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1365,No Promotion,
+TXN_1366,No Promotion,
+TXN_1367,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1368,No Promotion,
+TXN_1369,No Promotion,
+TXN_1370,No Promotion,
+TXN_1371,No Promotion,
+TXN_1372,No Promotion,
+TXN_1373,No Promotion,
+TXN_1374,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1375,10% Off,2024-03-01 to 2024-03-31
+TXN_1376,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1377,No Promotion,
+TXN_1378,10% Off,2024-09-01 to 2024-09-15
+TXN_1379,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1380,10% Off,2022-10-01 to 2022-10-31
+TXN_1381,No Promotion,
+TXN_1382,10% Off,2022-10-01 to 2022-10-31
+TXN_1383,No Promotion,
+TXN_1384,No Promotion,
+TXN_1385,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1386,No Promotion,
+TXN_1387,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1388,10% Off,2024-03-01 to 2024-03-31
+TXN_1389,No Promotion,
+TXN_1390,No Promotion,
+TXN_1391,No Promotion,
+TXN_1392,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1393,No Promotion,
+TXN_1394,No Promotion,
+TXN_1395,No Promotion,
+TXN_1396,No Promotion,
+TXN_1397,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1398,No Promotion,
+TXN_1399,10% Off,2024-09-01 to 2024-09-15
+TXN_1400,No Promotion,
+TXN_1401,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1402,No Promotion,
+TXN_1403,No Promotion,
+TXN_1404,No Promotion,
+TXN_1405,No Promotion,
+TXN_1406,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1407,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1408,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1409,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1410,10% Off,2024-09-01 to 2024-09-15
+TXN_1411,No Promotion,
+TXN_1412,No Promotion,
+TXN_1413,No Promotion,
+TXN_1414,No Promotion,
+TXN_1415,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1416,No Promotion,
+TXN_1417,No Promotion,
+TXN_1418,No Promotion,
+TXN_1419,No Promotion,
+TXN_1420,No Promotion,
+TXN_1421,No Promotion,
+TXN_1422,No Promotion,
+TXN_1423,No Promotion,
+TXN_1424,10% Off,2024-09-01 to 2024-09-15
+TXN_1425,No Promotion,
+TXN_1426,10% Off,2024-03-01 to 2024-03-31
+TXN_1427,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1428,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1429,No Promotion,
+TXN_1430,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1431,No Promotion,
+TXN_1432,No Promotion,
+TXN_1433,No Promotion,
+TXN_1434,No Promotion,
+TXN_1435,10% Off,2024-03-01 to 2024-03-31
+TXN_1436,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1437,No Promotion,
+TXN_1438,No Promotion,
+TXN_1439,No Promotion,
+TXN_1440,No Promotion,
+TXN_1441,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1442,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1443,No Promotion,
+TXN_1444,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1445,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1446,No Promotion,
+TXN_1447,10% Off,2023-02-01 to 2023-02-15
+TXN_1448,No Promotion,
+TXN_1449,No Promotion,
+TXN_1450,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1451,No Promotion,
+TXN_1452,No Promotion,
+TXN_1453,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1454,10% Off,2023-07-01 to 2023-07-15
+TXN_1455,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1456,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1457,No Promotion,
+TXN_1458,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1459,No Promotion,
+TXN_1460,No Promotion,
+TXN_1461,No Promotion,
+TXN_1462,No Promotion,
+TXN_1463,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1464,No Promotion,
+TXN_1465,No Promotion,
+TXN_1466,No Promotion,
+TXN_1467,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1468,No Promotion,
+TXN_1469,No Promotion,
+TXN_1470,No Promotion,
+TXN_1471,No Promotion,
+TXN_1472,10% Off,2022-10-01 to 2022-10-31
+TXN_1473,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1474,No Promotion,
+TXN_1475,No Promotion,
+TXN_1476,No Promotion,
+TXN_1477,No Promotion,
+TXN_1478,No Promotion,
+TXN_1479,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1480,10% Off,2022-10-01 to 2022-10-31
+TXN_1481,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1482,No Promotion,
+TXN_1483,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1484,No Promotion,
+TXN_1485,No Promotion,
+TXN_1486,10% Off,2022-10-01 to 2022-10-31
+TXN_1487,No Promotion,
+TXN_1488,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1489,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1490,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1491,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1492,No Promotion,
+TXN_1493,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1494,No Promotion,
+TXN_1495,No Promotion,
+TXN_1496,No Promotion,
+TXN_1497,No Promotion,
+TXN_1498,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1499,No Promotion,
+TXN_1500,10% Off,2023-02-01 to 2023-02-15
+TXN_1501,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1502,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1503,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1504,No Promotion,
+TXN_1505,No Promotion,
+TXN_1506,No Promotion,
+TXN_1507,No Promotion,
+TXN_1508,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1509,No Promotion,
+TXN_1510,No Promotion,
+TXN_1511,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1512,No Promotion,
+TXN_1513,No Promotion,
+TXN_1514,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1515,10% Off,2023-07-01 to 2023-07-15
+TXN_1516,No Promotion,
+TXN_1517,No Promotion,
+TXN_1518,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1519,No Promotion,
+TXN_1520,No Promotion,
+TXN_1521,No Promotion,
+TXN_1522,10% Off,2023-02-01 to 2023-02-15
+TXN_1523,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1524,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1525,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1526,No Promotion,
+TXN_1527,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1528,No Promotion,
+TXN_1529,No Promotion,
+TXN_1530,No Promotion,
+TXN_1531,No Promotion,
+TXN_1532,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1533,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1534,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1535,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1536,No Promotion,
+TXN_1537,No Promotion,
+TXN_1538,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1539,No Promotion,
+TXN_1540,No Promotion,
+TXN_1541,No Promotion,
+TXN_1542,No Promotion,
+TXN_1543,No Promotion,
+TXN_1544,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1545,No Promotion,
+TXN_1546,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1547,No Promotion,
+TXN_1548,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1549,No Promotion,
+TXN_1550,No Promotion,
+TXN_1551,No Promotion,
+TXN_1552,No Promotion,
+TXN_1553,No Promotion,
+TXN_1554,No Promotion,
+TXN_1555,No Promotion,
+TXN_1556,No Promotion,
+TXN_1557,No Promotion,
+TXN_1558,10% Off,2024-03-01 to 2024-03-31
+TXN_1559,No Promotion,
+TXN_1560,No Promotion,
+TXN_1561,No Promotion,
+TXN_1562,No Promotion,
+TXN_1563,No Promotion,
+TXN_1564,No Promotion,
+TXN_1565,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1566,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1567,No Promotion,
+TXN_1568,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1569,No Promotion,
+TXN_1570,No Promotion,
+TXN_1571,No Promotion,
+TXN_1572,No Promotion,
+TXN_1573,No Promotion,
+TXN_1574,10% Off,2022-10-01 to 2022-10-31
+TXN_1575,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1576,No Promotion,
+TXN_1577,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1578,No Promotion,
+TXN_1579,No Promotion,
+TXN_1580,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1581,No Promotion,
+TXN_1582,No Promotion,
+TXN_1583,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1584,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1585,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1586,No Promotion,
+TXN_1587,No Promotion,
+TXN_1588,10% Off,2022-10-01 to 2022-10-31
+TXN_1589,No Promotion,
+TXN_1590,10% Off,2024-03-01 to 2024-03-31
+TXN_1591,No Promotion,
+TXN_1592,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1593,No Promotion,
+TXN_1594,No Promotion,
+TXN_1595,No Promotion,
+TXN_1596,No Promotion,
+TXN_1597,No Promotion,
+TXN_1598,No Promotion,
+TXN_1599,10% Off,2024-03-01 to 2024-03-31
+TXN_1600,No Promotion,
+TXN_1601,No Promotion,
+TXN_1602,10% Off,2022-10-01 to 2022-10-31
+TXN_1603,10% Off,2023-02-01 to 2023-02-15
+TXN_1604,10% Off,2023-07-01 to 2023-07-15
+TXN_1605,10% Off,2022-10-01 to 2022-10-31
+TXN_1606,No Promotion,
+TXN_1607,No Promotion,
+TXN_1608,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1609,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1610,No Promotion,
+TXN_1611,No Promotion,
+TXN_1612,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1613,No Promotion,
+TXN_1614,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1615,No Promotion,
+TXN_1616,No Promotion,
+TXN_1617,10% Off,2024-03-01 to 2024-03-31
+TXN_1618,No Promotion,
+TXN_1619,10% Off,2023-02-01 to 2023-02-15
+TXN_1620,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1621,No Promotion,
+TXN_1622,No Promotion,
+TXN_1623,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1624,No Promotion,
+TXN_1625,No Promotion,
+TXN_1626,No Promotion,
+TXN_1627,No Promotion,
+TXN_1628,No Promotion,
+TXN_1629,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1630,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1631,No Promotion,
+TXN_1632,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1633,10% Off,2022-10-01 to 2022-10-31
+TXN_1634,10% Off,2024-03-01 to 2024-03-31
+TXN_1635,No Promotion,
+TXN_1636,10% Off,2022-10-01 to 2022-10-31
+TXN_1637,No Promotion,
+TXN_1638,No Promotion,
+TXN_1639,No Promotion,
+TXN_1640,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1641,No Promotion,
+TXN_1642,No Promotion,
+TXN_1643,No Promotion,
+TXN_1644,No Promotion,
+TXN_1645,10% Off,2023-07-01 to 2023-07-15
+TXN_1646,No Promotion,
+TXN_1647,No Promotion,
+TXN_1648,10% Off,2022-10-01 to 2022-10-31
+TXN_1649,No Promotion,
+TXN_1650,No Promotion,
+TXN_1651,10% Off,2024-03-01 to 2024-03-31
+TXN_1652,10% Off,2022-10-01 to 2022-10-31
+TXN_1653,No Promotion,
+TXN_1654,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1655,No Promotion,
+TXN_1656,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1657,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1658,No Promotion,
+TXN_1659,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1660,No Promotion,
+TXN_1661,No Promotion,
+TXN_1662,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1663,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1664,10% Off,2024-09-01 to 2024-09-15
+TXN_1665,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1666,No Promotion,
+TXN_1667,No Promotion,
+TXN_1668,No Promotion,
+TXN_1669,No Promotion,
+TXN_1670,No Promotion,
+TXN_1671,No Promotion,
+TXN_1672,No Promotion,
+TXN_1673,10% Off,2024-03-01 to 2024-03-31
+TXN_1674,No Promotion,
+TXN_1675,No Promotion,
+TXN_1676,10% Off,2023-07-01 to 2023-07-15
+TXN_1677,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1678,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1679,No Promotion,
+TXN_1680,No Promotion,
+TXN_1681,No Promotion,
+TXN_1682,10% Off,2022-10-01 to 2022-10-31
+TXN_1683,No Promotion,
+TXN_1684,No Promotion,
+TXN_1685,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1686,No Promotion,
+TXN_1687,No Promotion,
+TXN_1688,No Promotion,
+TXN_1689,No Promotion,
+TXN_1690,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1691,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1692,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1693,No Promotion,
+TXN_1694,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1695,No Promotion,
+TXN_1696,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1697,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1698,No Promotion,
+TXN_1699,No Promotion,
+TXN_1700,No Promotion,
+TXN_1701,No Promotion,
+TXN_1702,Free Shipping,2024-07-01 to 2024-07-15
+TXN_1703,No Promotion,
+TXN_1704,No Promotion,
+TXN_1705,No Promotion,
+TXN_1706,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1707,No Promotion,
+TXN_1708,10% Off,2024-09-01 to 2024-09-15
+TXN_1709,No Promotion,
+TXN_1710,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1711,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1712,No Promotion,
+TXN_1713,No Promotion,
+TXN_1714,No Promotion,
+TXN_1715,No Promotion,
+TXN_1716,No Promotion,
+TXN_1717,10% Off,2023-02-01 to 2023-02-15
+TXN_1718,No Promotion,
+TXN_1719,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1720,No Promotion,
+TXN_1721,No Promotion,
+TXN_1722,No Promotion,
+TXN_1723,No Promotion,
+TXN_1724,No Promotion,
+TXN_1725,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1726,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1727,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1728,No Promotion,
+TXN_1729,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1730,No Promotion,
+TXN_1731,10% Off,2024-03-01 to 2024-03-31
+TXN_1732,No Promotion,
+TXN_1733,No Promotion,
+TXN_1734,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1735,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1736,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1737,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1738,10% Off,2024-03-01 to 2024-03-31
+TXN_1739,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1740,No Promotion,
+TXN_1741,No Promotion,
+TXN_1742,No Promotion,
+TXN_1743,No Promotion,
+TXN_1744,No Promotion,
+TXN_1745,No Promotion,
+TXN_1746,No Promotion,
+TXN_1747,No Promotion,
+TXN_1748,No Promotion,
+TXN_1749,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1750,No Promotion,
+TXN_1751,No Promotion,
+TXN_1752,No Promotion,
+TXN_1753,No Promotion,
+TXN_1754,No Promotion,
+TXN_1755,No Promotion,
+TXN_1756,No Promotion,
+TXN_1757,No Promotion,
+TXN_1758,No Promotion,
+TXN_1759,No Promotion,
+TXN_1760,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1761,10% Off,2023-02-01 to 2023-02-15
+TXN_1762,No Promotion,
+TXN_1763,No Promotion,
+TXN_1764,No Promotion,
+TXN_1765,No Promotion,
+TXN_1766,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1767,No Promotion,
+TXN_1768,No Promotion,
+TXN_1769,No Promotion,
+TXN_1770,No Promotion,
+TXN_1771,10% Off,2024-03-01 to 2024-03-31
+TXN_1772,No Promotion,
+TXN_1773,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1774,No Promotion,
+TXN_1775,No Promotion,
+TXN_1776,No Promotion,
+TXN_1777,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1778,10% Off,2024-03-01 to 2024-03-31
+TXN_1779,10% Off,2022-10-01 to 2022-10-31
+TXN_1780,No Promotion,
+TXN_1781,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1782,No Promotion,
+TXN_1783,No Promotion,
+TXN_1784,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1785,No Promotion,
+TXN_1786,No Promotion,
+TXN_1787,No Promotion,
+TXN_1788,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1789,No Promotion,
+TXN_1790,No Promotion,
+TXN_1791,No Promotion,
+TXN_1792,10% Off,2024-03-01 to 2024-03-31
+TXN_1793,No Promotion,
+TXN_1794,No Promotion,
+TXN_1795,No Promotion,
+TXN_1796,No Promotion,
+TXN_1797,No Promotion,
+TXN_1798,No Promotion,
+TXN_1799,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1800,No Promotion,
+TXN_1801,10% Off,2022-10-01 to 2022-10-31
+TXN_1802,No Promotion,
+TXN_1803,No Promotion,
+TXN_1804,No Promotion,
+TXN_1805,No Promotion,
+TXN_1806,No Promotion,
+TXN_1807,No Promotion,
+TXN_1808,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1809,No Promotion,
+TXN_1810,10% Off,2024-03-01 to 2024-03-31
+TXN_1811,10% Off,2024-03-01 to 2024-03-31
+TXN_1812,10% Off,2023-02-01 to 2023-02-15
+TXN_1813,10% Off,2023-07-01 to 2023-07-15
+TXN_1814,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1815,No Promotion,
+TXN_1816,No Promotion,
+TXN_1817,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1818,No Promotion,
+TXN_1819,No Promotion,
+TXN_1820,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1821,No Promotion,
+TXN_1822,10% Off,2022-10-01 to 2022-10-31
+TXN_1823,No Promotion,
+TXN_1824,No Promotion,
+TXN_1825,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1826,No Promotion,
+TXN_1827,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1828,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1829,No Promotion,
+TXN_1830,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1831,No Promotion,
+TXN_1832,No Promotion,
+TXN_1833,No Promotion,
+TXN_1834,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1835,10% Off,2023-02-01 to 2023-02-15
+TXN_1836,No Promotion,
+TXN_1837,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1838,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1839,No Promotion,
+TXN_1840,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1841,No Promotion,
+TXN_1842,10% Off,2023-07-01 to 2023-07-15
+TXN_1843,No Promotion,
+TXN_1844,No Promotion,
+TXN_1845,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1846,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1847,No Promotion,
+TXN_1848,10% Off,2023-02-01 to 2023-02-15
+TXN_1849,10% Off,2024-03-01 to 2024-03-31
+TXN_1850,No Promotion,
+TXN_1851,No Promotion,
+TXN_1852,No Promotion,
+TXN_1853,No Promotion,
+TXN_1854,No Promotion,
+TXN_1855,10% Off,2024-03-01 to 2024-03-31
+TXN_1856,No Promotion,
+TXN_1857,No Promotion,
+TXN_1858,No Promotion,
+TXN_1859,No Promotion,
+TXN_1860,No Promotion,
+TXN_1861,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1862,No Promotion,
+TXN_1863,No Promotion,
+TXN_1864,No Promotion,
+TXN_1865,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1866,10% Off,2024-09-01 to 2024-09-15
+TXN_1867,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1868,10% Off,2024-03-01 to 2024-03-31
+TXN_1869,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1870,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1871,10% Off,2022-10-01 to 2022-10-31
+TXN_1872,No Promotion,
+TXN_1873,10% Off,2022-10-01 to 2022-10-31
+TXN_1874,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1875,10% Off,2023-07-01 to 2023-07-15
+TXN_1876,No Promotion,
+TXN_1877,10% Off,2024-03-01 to 2024-03-31
+TXN_1878,No Promotion,
+TXN_1879,No Promotion,
+TXN_1880,No Promotion,
+TXN_1881,No Promotion,
+TXN_1882,No Promotion,
+TXN_1883,10% Off,2022-10-01 to 2022-10-31
+TXN_1884,No Promotion,
+TXN_1885,No Promotion,
+TXN_1886,No Promotion,
+TXN_1887,No Promotion,
+TXN_1888,No Promotion,
+TXN_1889,No Promotion,
+TXN_1890,No Promotion,
+TXN_1891,No Promotion,
+TXN_1892,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1893,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1894,No Promotion,
+TXN_1895,No Promotion,
+TXN_1896,10% Off,2023-07-01 to 2023-07-15
+TXN_1897,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1898,No Promotion,
+TXN_1899,10% Off,2022-10-01 to 2022-10-31
+TXN_1900,No Promotion,
+TXN_1901,No Promotion,
+TXN_1902,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1903,No Promotion,
+TXN_1904,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1905,10% Off,2023-02-01 to 2023-02-15
+TXN_1906,No Promotion,
+TXN_1907,No Promotion,
+TXN_1908,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1909,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1910,No Promotion,
+TXN_1911,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1912,No Promotion,
+TXN_1913,No Promotion,
+TXN_1914,No Promotion,
+TXN_1915,No Promotion,
+TXN_1916,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1917,Free Shipping,2022-09-01 to 2022-09-30
+TXN_1918,No Promotion,
+TXN_1919,No Promotion,
+TXN_1920,No Promotion,
+TXN_1921,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1922,No Promotion,
+TXN_1923,No Promotion,
+TXN_1924,No Promotion,
+TXN_1925,No Promotion,
+TXN_1926,No Promotion,
+TXN_1927,No Promotion,
+TXN_1928,No Promotion,
+TXN_1929,No Promotion,
+TXN_1930,No Promotion,
+TXN_1931,No Promotion,
+TXN_1932,No Promotion,
+TXN_1933,10% Off,2024-03-01 to 2024-03-31
+TXN_1934,No Promotion,
+TXN_1935,10% Off,2023-07-01 to 2023-07-15
+TXN_1936,10% Off,2022-10-01 to 2022-10-31
+TXN_1937,Free Shipping,2023-10-01 to 2023-10-15
+TXN_1938,No Promotion,
+TXN_1939,No Promotion,
+TXN_1940,No Promotion,
+TXN_1941,No Promotion,
+TXN_1942,Buy 1 Get 1 Free,2024-06-01 to 2024-06-15
+TXN_1943,No Promotion,
+TXN_1944,10% Off,2022-10-01 to 2022-10-31
+TXN_1945,No Promotion,
+TXN_1946,10% Off,2022-10-01 to 2022-10-31
+TXN_1947,No Promotion,
+TXN_1948,No Promotion,
+TXN_1949,10% Off,2024-03-01 to 2024-03-31
+TXN_1950,No Promotion,
+TXN_1951,No Promotion,
+TXN_1952,Free Shipping,2023-09-15 to 2023-09-30
+TXN_1953,No Promotion,
+TXN_1954,10% Off,2024-03-01 to 2024-03-31
+TXN_1955,No Promotion,
+TXN_1956,10% Off,2022-10-01 to 2022-10-31
+TXN_1957,No Promotion,
+TXN_1958,No Promotion,
+TXN_1959,No Promotion,
+TXN_1960,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1961,No Promotion,
+TXN_1962,No Promotion,
+TXN_1963,No Promotion,
+TXN_1964,No Promotion,
+TXN_1965,10% Off,2024-09-01 to 2024-09-15
+TXN_1966,No Promotion,
+TXN_1967,No Promotion,
+TXN_1968,No Promotion,
+TXN_1969,No Promotion,
+TXN_1970,No Promotion,
+TXN_1971,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1972,No Promotion,
+TXN_1973,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1974,No Promotion,
+TXN_1975,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1976,10% Off,2024-03-01 to 2024-03-31
+TXN_1977,No Promotion,
+TXN_1978,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1979,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1980,No Promotion,
+TXN_1981,No Promotion,
+TXN_1982,No Promotion,
+TXN_1983,No Promotion,
+TXN_1984,10% Off,2024-03-01 to 2024-03-31
+TXN_1985,Buy 1 Get 1 Free,2022-08-01 to 2022-08-31
+TXN_1986,No Promotion,
+TXN_1987,No Promotion,
+TXN_1988,Buy 1 Get 1 Free,2023-11-25 to 2023-12-25
+TXN_1989,10% Off,2023-07-01 to 2023-07-15
+TXN_1990,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1991,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1992,No Promotion,
+TXN_1993,No Promotion,
+TXN_1994,10% Off,2023-02-01 to 2023-02-15
+TXN_1995,No Promotion,
+TXN_1996,No Promotion,
+TXN_1997,Buy 1 Get 1 Free,2022-12-01 to 2022-12-31
+TXN_1998,Buy 1 Get 1 Free,2023-08-15 to 2023-09-15
+TXN_1999,No Promotion,
+TXN_2000,No Promotion,
