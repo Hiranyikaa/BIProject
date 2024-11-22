@@ -7,6 +7,7 @@ from collections import Counter
 from datetime import datetime, timedelta
 import numpy as np
 import plotly.graph_objects as go
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 # Add Custom CSS for Frontend
 st.markdown("""
@@ -238,11 +239,12 @@ def funnel_analysis():
 def inventory_analysis():
     st.header("Inventory Analysis")
 
-    # Ensure df_inventory is initialized or fetched correctly
-    global df_inventory  # Use global scope if df_inventory is already defined outside
+    # Declare df_inventory as global to ensure proper access
+    global df_inventory
 
-    if 'Current Stock' not in df_inventory.columns:
-        st.error("The 'Current Stock' column is missing from the inventory dataset.")
+    # Ensure df_inventory is loaded and contains required columns
+    if df_inventory is None or 'Product ID' not in df_inventory.columns or 'Current Stock' not in df_inventory.columns:
+        st.error("The inventory dataset is not loaded properly or missing required columns.")
         return
 
     # Ensure Timestamp Purchase is in datetime format
@@ -264,24 +266,50 @@ def inventory_analysis():
     df_inventory['Current Stock'] = df_inventory['Current Stock'].fillna(0)
     df_inventory['Reorder Point'] = df_inventory['Reorder Point'].fillna(0)
 
-    # Identify below-reorder-point products for color-coding and table
-    df_inventory['Below Reorder Point'] = df_inventory['Current Stock'] < df_inventory['Reorder Point']
-    colors = ['red' if below else 'skyblue' for below in df_inventory['Below Reorder Point']]
+    # SARIMAX Forecast Function
+    def forecast_daily_sales(product_id, forecast_days=30):
+        product_data = daily_sales[daily_sales['Product ID'] == product_id][['Date', 'Units Sold']].set_index('Date')
 
-    # Plot the inventory levels and reorder points
+        if len(product_data) < 10:  # Ensure enough data
+            return pd.Series([0] * forecast_days, index=pd.date_range(product_data.index.max() + timedelta(days=1), periods=forecast_days))
+
+        model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))  # Weekly seasonality
+        results = model.fit(disp=False)
+        forecast = results.get_forecast(steps=forecast_days)
+        return forecast.predicted_mean
+
+    forecast_days = 30
+    forecasted_sales = {product_id: forecast_daily_sales(product_id, forecast_days).sum() for product_id in df_inventory['Product ID']}
+    df_inventory['Forecasted Sales'] = df_inventory['Product ID'].map(forecasted_sales)
+
+    # Calculate additional units needed
+    df_inventory['Additional Units Needed'] = df_inventory['Forecasted Sales'] - df_inventory['Current Stock']
+    df_inventory['Additional Units Needed'] = df_inventory['Additional Units Needed'].apply(lambda x: max(x, 0))
+
+    # Determine colors for bars
+    bar_colors = ['red' if stock < reorder else 'skyblue' for stock, reorder in zip(df_inventory['Current Stock'], df_inventory['Reorder Point'])]
+
+    # Plot Inventory Levels and Forecasted Needs
     fig, ax = plt.subplots(figsize=(18, 8))
     product_ids = df_inventory['Product ID']
 
-    # Bar plot for current stock levels with color-coded bars
-    bars = ax.bar(
+    ax.bar(
         product_ids,
         df_inventory['Current Stock'],
-        color=colors,
+        color=bar_colors,
         alpha=0.7,
-        label='Stock Level'
+        label='Current Stock'
     )
 
-    # Line plot for reorder points
+    ax.bar(
+        product_ids,
+        df_inventory['Additional Units Needed'],
+        bottom=df_inventory['Current Stock'],
+        color='orange',
+        alpha=0.7,
+        label='Additional Units Needed'
+    )
+
     ax.plot(
         product_ids,
         df_inventory['Reorder Point'],
@@ -290,46 +318,39 @@ def inventory_analysis():
         label='Reorder Point'
     )
 
-    # Annotate bars and lines for better readability
-    for i, bar in enumerate(bars):
-        height = bar.get_height()
+    for i, product_id in enumerate(product_ids):
+        current_stock = df_inventory.loc[i, 'Current Stock']
+        additional_units = df_inventory.loc[i, 'Additional Units Needed']
+        reorder_point = df_inventory.loc[i, 'Reorder Point']
+
         ax.text(
-            bar.get_x() + bar.get_width() / 2,
-            height + 1,
-            f"{height:.0f}",
+            i,
+            current_stock + additional_units + 1,
+            f"{int(current_stock)}",
             ha='center',
             fontsize=8
         )
         ax.text(
             i,
-            df_inventory['Reorder Point'].iloc[i] + 1,
-            f"{df_inventory['Reorder Point'].iloc[i]:.0f}",
+            reorder_point + 1,
+            f"{int(reorder_point)}",
             ha='center',
             color='gray',
             fontsize=8
         )
 
-    # Adjust labels, title, and legend
     ax.set_xticks(range(len(product_ids)))
     ax.set_xticklabels(product_ids, rotation=45, ha='right', fontsize=9)
     ax.set_xlabel('Products', fontsize=10, fontweight='bold')
-    ax.set_ylabel('Stock Level', fontsize=10, fontweight='bold')
-    ax.set_title('Inventory Levels and Reorder Points', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Units', fontsize=10, fontweight='bold')
+    ax.set_title('Inventory Levels and Forecasted Needs', fontsize=12, fontweight='bold')
     ax.legend()
 
-    # Tighten layout and display the plot
     plt.tight_layout()
     st.pyplot(fig)
 
-    # Display the out-of-stock products table
-    out_of_stock = df_inventory[df_inventory['Below Reorder Point']][['Product ID', 'Product Name', 'Current Stock']]
-
-    if out_of_stock.empty:
-        st.subheader("Out-of-Stock Products")
-        st.write("No products are currently out of stock.")
-    else:
-        st.subheader("Out-of-Stock Products")
-        st.table(out_of_stock)
+    st.subheader("Inventory Forecast and Analysis")
+    st.table(df_inventory[['Product ID', 'Product Name', 'Current Stock', 'Reorder Point', 'Forecasted Sales', 'Additional Units Needed']])
 
 
 
