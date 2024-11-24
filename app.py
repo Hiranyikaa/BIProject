@@ -235,7 +235,7 @@ def funnel_analysis():
     })
     st.table(funnel_summary_df.style.set_caption("Drop-Off Rate and Customers at Each Funnel Stage"))
 
-
+'''
 def inventory_analysis():
     st.header("Inventory Analysis")
 
@@ -351,6 +351,129 @@ def inventory_analysis():
 
     st.subheader("Inventory Forecast and Analysis")
     st.table(df_inventory[['Product ID', 'Product Name', 'Current Stock', 'Reorder Point', 'Forecasted Sales', 'Additional Units Needed']])
+'''
+
+def inventory_analysis():
+    st.header("Inventory Analysis")
+
+    # Declare df_inventory as global to ensure proper access
+    global df_inventory
+
+    # Ensure df_inventory is loaded and contains required columns
+    if df_inventory is None or 'Product ID' not in df_inventory.columns or 'Current Stock' not in df_inventory.columns:
+        st.error("The inventory dataset is not loaded properly or missing required columns.")
+        return
+
+    # Ensure Timestamp Purchase is in datetime format
+    df_transaction['Timestamp Purchase'] = pd.to_datetime(df_transaction['Timestamp Purchase'])
+    df_item['Date'] = df_transaction['Timestamp Purchase'].dt.date
+
+    # Calculate daily sales and average daily sales
+    daily_sales = df_item.groupby(['Product ID', 'Date'])['Units Sold'].sum().reset_index()
+    average_daily_sales = daily_sales.groupby('Product ID')['Units Sold'].mean().reset_index()
+    average_daily_sales.columns = ['Product ID', 'Average Daily Sales']
+
+    # Merge average daily sales into inventory dataframe
+    df_inventory = df_inventory.merge(average_daily_sales, on='Product ID', how='left')
+
+    # Define estimated lead times based on product categories
+    category_lead_times = {
+        'Clothing': 5,
+        'Sports & Outdoors': 7,
+        'Home & Kitchen': 10,
+        'Electronics': 15,
+        'Personal Care': 3,
+        'Kid Products': 6,
+        'Grocery': 2,
+        'Books': 8,
+        'Pet Supplies': 5
+    }
+
+    # Map lead times to products
+    df_inventory['Lead Time'] = df_inventory['Product Category'].map(category_lead_times)
+
+    # Calculate Reorder Point
+    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * df_inventory['Lead Time']
+
+    # Determine Stock Status
+    def determine_stock_status(row):
+        if row['Current Stock'] >= row['Reorder Point']:
+            return 'In Stock'
+        elif 0 < row['Current Stock'] < row['Reorder Point']:
+            return 'Low Stock'
+        else:
+            return 'Out of Stock'
+
+    df_inventory['Stock Status'] = df_inventory.apply(determine_stock_status, axis=1)
+
+    # Calculate 'Additional Units Needed'
+    df_inventory['Additional Units Needed'] = df_inventory['Reorder Point'] - df_inventory['Current Stock']
+    df_inventory['Additional Units Needed'] = df_inventory['Additional Units Needed'].apply(lambda x: max(x, 0))
+
+    # Display Summary
+    st.subheader("Reorder Status")
+    in_stock_count = (df_inventory['Stock Status'] == "In Stock").sum()
+    low_stock_count = (df_inventory['Stock Status'] == "Low Stock").sum()
+    out_of_stock_count = (df_inventory['Stock Status'] == "Out of Stock").sum()
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("In Stock", f"{in_stock_count} Products")
+    with col2:
+        st.metric("Low Stock", f"{low_stock_count} Products")
+    with col3:
+        st.metric("Out of Stock", f"{out_of_stock_count} Products")
+
+    # Visualization: Inventory Levels and Reorder Points
+    fig, ax = plt.subplots(figsize=(18, 8))
+    product_ids = df_inventory['Product ID']
+
+    # Plot Stock Level as Blue Bars
+    ax.bar(
+        product_ids,
+        df_inventory['Current Stock'],
+        color='skyblue',
+        alpha=0.7,
+        label='Stock Level'
+    )
+
+    # Highlight bars in red if below the reorder point
+    for i, (current_stock, reorder_point) in enumerate(zip(df_inventory['Current Stock'], df_inventory['Reorder Point'])):
+        if current_stock < reorder_point:
+            ax.bar(
+                product_ids[i],
+                current_stock,
+                color='red',
+                alpha=0.7,
+                label='Below Reorder Point' if i == 0 else ""
+            )
+
+    # Plot Reorder Point as a Line
+    ax.plot(
+        product_ids,
+        df_inventory['Reorder Point'],
+        color='gray',
+        marker='o',
+        label='Reorder Point'
+    )
+
+    # Styling the Graph
+    ax.set_xticks(range(len(product_ids)))
+    ax.set_xticklabels(product_ids, rotation=45, ha='right', fontsize=9)
+    ax.set_xlabel('Products', fontsize=10, fontweight='bold')
+    ax.set_ylabel('Stock Level', fontsize=10, fontweight='bold')
+    ax.set_title('Inventory Levels and Reorder Points', fontsize=12, fontweight='bold')
+    ax.legend()
+
+    plt.tight_layout()
+
+    # Display the chart
+    st.pyplot(fig)
+
+    # Display Detailed Inventory Table
+    st.subheader("Inventory Forecast and Analysis")
+    st.table(df_inventory[['Product ID', 'Product Name', 'Product Category', 'Current Stock',
+                           'Average Daily Sales', 'Lead Time', 'Reorder Point', 'Stock Status']])
 
 
 
