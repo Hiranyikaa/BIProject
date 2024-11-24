@@ -1,0 +1,50 @@
+Product ID,Product Name,Product Category,Current Price,Price History,Current Stock
+PROD_0001,Cotton Crew Neck T-Shirt,Clothing,18.0,"[17.24, 20.12]",65
+PROD_0002,Stainless Steel Water Bottle,Sports & Outdoors,25.0,"[24.11, 26.44, 28.63]",62
+PROD_0003,Nonstick Frying Pan,Home & Kitchen,40.0,"[36.83, 38.05, 38.78, 43.68]",12
+PROD_0004,Wireless Bluetooth Earbuds,Electronics,75.0,"[74.91, 77.74, 83.07]",81
+PROD_0005,Organic Baby Lotion,Personal Care,15.0,"[14.41, 14.52, 15.5, 15.59]",45
+PROD_0006,Educational Wooden Toy Set,Kid Products,30.0,"[26.6, 33.83]",71
+PROD_0007,Organic Brown Rice (5 lb),Grocery,12.0,"[11.11, 11.23, 11.89]",26
+PROD_0008,Classic Leather Belt,Clothing,35.0,[33.31],33
+PROD_0009,Ceramic Coffee Mug (Set of 2),Home & Kitchen,20.0,"[18.59, 19.7, 19.93, 20.64]",1
+PROD_0010,Hardcover Notebook,Books,10.0,"[9.32, 11.36]",21
+PROD_0011,Adjustable Dumbbell Set (20 lbs),Sports & Outdoors,60.0,"[61.15, 64.5]",83
+PROD_0012,Digital Alarm Clock,Electronics,25.0,"[25.71, 26.69, 27.54]",77
+PROD_0013,Dog Chew Toy Set,Pet Supplies,18.0,"[16.22, 17.04, 17.34, 20.39]",37
+PROD_0014,"Portable Power Bank (10,000 mAh)",Electronics,30.0,"[27.19, 32.89]",69
+PROD_0015,Rattan Laundry Hamper,Home & Kitchen,45.0,"[40.53, 41.48, 47.39]",34
+PROD_0016,Automatic Pet Feeder,Pet Supplies,50.0,"[44.08, 51.59, 51.9]",57
+PROD_0017,Organic Herbal Tea (20 bags),Grocery,8.0,[6.82],83
+PROD_0018,Handwoven Picnic Blanket,Sports & Outdoors,40.0,"[34.99, 38.58, 39.26, 42.05]",50
+PROD_0019,Soft Cotton Bath Towel Set,Personal Care,30.0,[32.45],92
+PROD_0020,Kids' Building Blocks Set,Kid Products,25.0,"[21.56, 23.54, 25.09, 25.84]",62
+PROD_0021,Leather-bound Journal,Books,20.0,"[17.25, 18.62, 22.04]",40
+PROD_0022,Anti-theft Backpack,Clothing,55.0,[60.07],87
+PROD_0023,Non-slip Yoga Mat,Sports & Outdoors,35.0,[36.59],31
+PROD_0024,Digital Meat Thermometer,Home & Kitchen,18.0,"[17.9, 20.37]",47
+PROD_0025,Stainless Steel Mixing Bowls (Set of 3),Home & Kitchen,32.0,"[28.79, 33.74]",27
+PROD_0026,High Protein Dog Food (15 lb),Pet Supplies,35.0,"[30.07, 34.43, 35.26]",91
+PROD_0027,Baby Cradle Swing,Kid Products,150.0,"[138.6, 156.64, 159.14, 163.31]",65
+PROD_0028,Organic Cotton Face Towels (Pack of 6),Personal Care,20.0,"[17.42, 19.94, 22.45]",32
+PROD_0029,Organic Vegetable Pasta (16 oz),Grocery,6.0,[5.96],47
+PROD_0030,Smart Fitness Watch,Electronics,120.0,"[112.84, 116.06, 129.25, 132.92]",77
+PROD_0031,Insulated Sports Water Bottle,Sports & Outdoors,28.0,[29.79],4
+PROD_0032,Glass Storage Jar (Set of 4),Home & Kitchen,35.0,[37.86],98
+PROD_0033,Hardcover Children's Storybook,Books,15.0,"[14.72, 16.37, 16.41]",38
+PROD_0034,Plush Baby Blanket,Kid Products,25.0,"[22.57, 26.03]",76
+PROD_0035,Natural Moisturizing Shampoo,Personal Care,14.0,"[12.24, 13.54, 14.11, 14.64]",95
+PROD_0036,Adjustable Laptop Stand,Electronics,45.0,[40.31],53
+PROD_0037,Natural Cat Scratching Post,Pet Supplies,40.0,"[39.29, 40.21, 43.16]",39
+PROD_0038,Kitchen Knife Set (5-piece),Home & Kitchen,60.0,"[53.75, 54.08, 59.13, 68.34]",85
+PROD_0039,Leather Wallet,Clothing,30.0,"[27.14, 31.9, 33.94]",9
+PROD_0040,Organic Granola Cereal (16 oz),Grocery,10.0,"[8.92, 10.84, 10.91, 11.15]",16
+PROD_0041,Foldable Camping Chair,Sports & Outdoors,45.0,"[40.42, 41.07, 41.38, 48.89]",77
+PROD_0042,Multi-surface Cleaner (32 oz),Home & Kitchen,12.0,"[11.95, 12.27]",47
+PROD_0043,Protective Phone Case,Electronics,15.0,[15.76],83
+PROD_0044,Dog Grooming Kit,Pet Supplies,35.0,"[32.97, 34.23, 36.91, 39.71]",41
+PROD_0045,Ergonomic Office Chair,Home & Kitchen,150.0,[149.99],48
+PROD_0046,Cozy Cotton Pajama Set,Clothing,35.0,"[30.81, 32.61, 32.69]",91
+PROD_0047,Aromatherapy Essential Oil Set (6-Pack),Personal Care,30.0,"[27.24, 33.6]",47
+PROD_0048,Waterproof Baby Changing Pad,Kid Products,20.0,[20.4],48
+PROD_0049,Organic Honey (16 oz),Grocery,15.0,"[12.88, 13.15, 16.06, 16.99]",81
