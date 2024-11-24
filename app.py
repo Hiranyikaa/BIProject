@@ -487,7 +487,7 @@ if login():  # User authenticated
     # Sidebar Navigation
     st.sidebar.title("Dynamic BI for Retail")
     page = st.sidebar.radio(
-        "Navigate",
+        "",
         options=["Browsing Pattern", "Seasonal & Geographic", "Price Sensitivity", "Funnel Analysis", "Inventory Analysis"]
     )
 
