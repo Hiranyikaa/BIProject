@@ -24,6 +24,45 @@ st.markdown("""
         .logout-button { background-color: #F899CE; color: white; border: none; border-radius: 5px; padding: 6px 12px; }
         .sidebar .sidebar-content { background: linear-gradient(120deg, #A49CF4, #F899CE); color: white; }
     </style>
+
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #F8F9FA; 
+            color: #6C3483; 
+        }
+        h1, h2, h3 { 
+            color: #6C3483; 
+            font-weight: bold; 
+        }
+        .sidebar .sidebar-content { 
+            background: linear-gradient(120deg, #A49CF4, #F899CE); 
+            color: white; 
+        }
+        .stButton>button { 
+            background-color: #C39BD3; 
+            color: white; 
+            border-radius: 5px; 
+            border: none; 
+            font-weight: bold; 
+            padding: 8px 12px; 
+        }
+        .stDataFrame { 
+            background-color: #EBDEF0; 
+            color: #6C3483; 
+            font-weight: bold; 
+        }
+        .stMarkdown, .stTextInput>div>div>input { 
+            color: #6C3483; 
+        }
+        .stNumberInput>div>input { 
+            background-color: #F9EBEA; 
+            color: #6C3483; 
+            border: 1px solid #D2B4DE; 
+            border-radius: 5px; 
+            padding: 5px; 
+        }
+    </style>
 """, unsafe_allow_html=True)
 
 # Load datasets
@@ -44,27 +83,24 @@ if "username" not in st.session_state:
 # Function: Login System
 def login():
     """Login page function."""
-    st.sidebar.title("Login")
+    if not st.session_state["authenticated"]:
+        st.sidebar.title("Login")  # แสดง "Login" ใน Sidebar เฉพาะเมื่อยังไม่ได้ล็อกอิน
 
-    # If the user is already logged in, skip login page
-    if st.session_state["authenticated"]:
-        return True
+        # Login form
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        login_button = st.button("Login")
 
-    # Login form
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    login_button = st.button("Login")
+        if login_button:
+            if username in USER_CREDENTIALS and USER_CREDENTIALS[username] == password:
+                st.session_state["authenticated"] = True
+                st.session_state["username"] = username
+                st.success(f"Logged in as: {username}")
+            else:
+                st.error("Invalid username or password.")
+        return False
 
-    # Validate login
-    if login_button:
-        if username in USER_CREDENTIALS and USER_CREDENTIALS[username] == password:
-            st.session_state["authenticated"] = True
-            st.session_state["username"] = username
-            st.success(f"Logged in as: {username}")
-        else:
-            st.error("Invalid username or password.")
-
-    return False
+    return True
 
 
 def logout():
@@ -189,7 +225,6 @@ def seasonal_and_geographic():
         )
         return fig
 
-    st.subheader(f"Monthly Sales - Year {selected_year}")
     st.plotly_chart(plot_sales_for_year(selected_year), use_container_width=True)
 
     # "Best Selling Months and Categories" Table
@@ -275,10 +310,8 @@ def funnel_analysis():
 def inventory_analysis():
     st.header("Inventory Analysis")
 
-    # Declare df_inventory as global to ensure proper access
     global df_inventory
 
-    # Ensure df_inventory is loaded and contains required columns
     if df_inventory is None or 'Product ID' not in df_inventory.columns or 'Current Stock' not in df_inventory.columns:
         st.error("The inventory dataset is not loaded properly or missing required columns.")
         return
@@ -295,10 +328,22 @@ def inventory_analysis():
     # Merge average daily sales into inventory dataframe
     df_inventory = df_inventory.merge(average_daily_sales, on='Product ID', how='left')
 
-    # Add a column for reorder points
-    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * 3  # Example: 3 days of average sales
+    # Add a column for reorder points with default values
+    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * 3  # Default value
 
-    # Fill missing values for current stock and reorder point
+    # Allow users to set reorder points manually
+    st.subheader("Set Custom Reorder Points")
+    for i, row in df_inventory.iterrows():
+        new_reorder_point = st.number_input(
+            f"Reorder Point for {row['Product ID']} ({row['Product Name']})",
+            min_value=0.0,
+            value=float(row['Reorder Point']),
+            step=1.0,
+            key=f"reorder_{i}"
+        )
+        df_inventory.at[i, 'Reorder Point'] = new_reorder_point
+
+    # Fill missing values
     df_inventory['Current Stock'] = df_inventory['Current Stock'].fillna(0)
     df_inventory['Reorder Point'] = df_inventory['Reorder Point'].fillna(0)
 
@@ -306,10 +351,10 @@ def inventory_analysis():
     def forecast_daily_sales(product_id, forecast_days=30):
         product_data = daily_sales[daily_sales['Product ID'] == product_id][['Date', 'Units Sold']].set_index('Date')
 
-        if len(product_data) < 10:  # Ensure enough data
+        if len(product_data) < 10:
             return pd.Series([0] * forecast_days, index=pd.date_range(product_data.index.max() + timedelta(days=1), periods=forecast_days))
 
-        model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))  # Weekly seasonality
+        model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))
         results = model.fit(disp=False)
         forecast = results.get_forecast(steps=forecast_days)
         return forecast.predicted_mean
@@ -471,19 +516,8 @@ def price_sensitivity():
     generate_category_promo_tables(df_merged)
 
 
-
 # Main App with Login Check
 if login():  # User authenticated
-    # Display login info at the top
-    st.markdown(f"""
-        <div style='display: flex; justify-content: space-between; align-items: center; background-color: #f8f8f8; padding: 10px; border-bottom: 1px solid #ddd;'>
-            <span style='font-size: 16px;'>Logged in as: <strong>{st.session_state['username']}</strong></span>
-            <form action="/" method="get">
-                <button class='logout-button' type="submit" onclick="window.location.reload();">Logout</button>
-            </form>
-        </div>
-    """, unsafe_allow_html=True)
-
     # Sidebar Navigation
     st.sidebar.title("Dynamic BI for Retail")
     page = st.sidebar.radio(
@@ -491,8 +525,11 @@ if login():  # User authenticated
         options=["Browsing Pattern", "Seasonal & Geographic", "Price Sensitivity", "Funnel Analysis", "Inventory Analysis"]
     )
 
-    # Main Page Content
-    st.title("Retail Data Analysis Dashboard")
+    # Add Logout Button to Sidebar at the Bottom
+    st.sidebar.markdown("<hr>", unsafe_allow_html=True)  # Optional Divider
+    if st.sidebar.button("Logout", key="logout"):
+        logout()
+
 
     # Conditional Navigation Logic
     if page == "Browsing Pattern":
@@ -506,4 +543,5 @@ if login():  # User authenticated
     elif page == "Inventory Analysis":
         inventory_analysis()
 else:
-    st.warning("Please login to access the app.") 
+    st.empty()  # ใช้แทนการแสดงข้อความใดๆ
+
