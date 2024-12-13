@@ -111,24 +111,46 @@ def logout():
 
 
 # Function Definitions for Each Page
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from itertools import combinations
+from collections import Counter
+import streamlit as st
+
 def browsing_pattern():
     st.header("Browsing Pattern - Product Pair Heatmap")
 
     # Generate product pairs and counts
     products_per_transaction = df_item.groupby('Transaction ID')['Product ID'].apply(list)
+
     product_pairs = []
     for products in products_per_transaction:
         if len(products) > 1:
-            product_pairs.extend(list(combinations(products, 2)))
+            sorted_products = sorted(products)
+            product_pairs.extend(list(combinations(sorted_products, 2)))
 
     pair_counts = Counter(product_pairs)
+
     df_pair_counts = pd.DataFrame(pair_counts.items(), columns=['Product Pair', 'Count'])
     df_pair_counts[['Product 1', 'Product 2']] = pd.DataFrame(df_pair_counts['Product Pair'].tolist(), index=df_pair_counts.index)
 
-    # Generate Heatmap
+    # Generate pivot table
     pivot_table = df_pair_counts.pivot_table(index='Product 1', columns='Product 2', values='Count', fill_value=0)
-    fig, ax = plt.subplots(figsize=(12, 10))
-    sns.heatmap(pivot_table, annot=False, cmap="coolwarm", fmt='.0f', ax=ax)
+    pivot_table = pivot_table.round(0).astype(int)
+
+    # Set lower triangular values to 0
+    for i in range(len(pivot_table)):
+        for j in range(i):
+            pivot_table.iloc[i, j] = 0
+
+    # Plot heatmap
+    fig, ax = plt.subplots(figsize=(16, 12))
+    sns.heatmap(pivot_table, annot=True, cmap="coolwarm", fmt='d', ax=ax, cbar_kws={'label': 'Number of Pairs'})
+    plt.xticks(rotation=90)
+    plt.yticks(rotation=0)
+    plt.title('Product Pair Heatmap: Frequently Bought Together')
+    plt.tight_layout()
     st.pyplot(fig)
 
     # Display Top Cross-Selling Products
@@ -426,61 +448,82 @@ def seasonal_and_geographic():
 
 def funnel_analysis():
     st.header("Funnel Analysis")
-    
+
     # Define funnel stages
     funnel_stages = ['Homepage', 'Product Detail Page', 'Cart Page', 'Checkout Page', 'Order Confirmation Page']
-    
-    # Check stages visited for each session
+
+    # Check which stages each session reached
     def check_funnel_stages(pages_visited):
         return {stage: stage in pages_visited for stage in funnel_stages}
-    
+
+    # Apply the function to the dataset
     df_behavioral['Funnel Stages'] = df_behavioral['Pages Visited'].apply(check_funnel_stages)
+
+    # Create a DataFrame for funnel stages
     funnel_stage_df = pd.DataFrame(df_behavioral['Funnel Stages'].tolist())
-    funnel_stage_counts = funnel_stage_df.sum().values
-    
-    # Total sessions and conversion/drop-off rates
+
+    # Count how many sessions reached each stage
+    funnel_stage_counts = funnel_stage_df.sum()
+
+    # Calculate conversion rates
     total_sessions = len(df_behavioral)
     conversion_rates = (funnel_stage_counts / total_sessions) * 100
-    dropoff_rates = [0] + [100 - (conversion_rates[i] / conversion_rates[i-1] * 100) if conversion_rates[i-1] != 0 else 0 for i in range(1, len(conversion_rates))]
-    
-    # Funnel graph
+
+    # Calculate drop-off rates
+    dropoff_rates = 100 - conversion_rates
+
+    # Plot the funnel analysis
     index = np.arange(len(funnel_stages))
     bar_width = 0.35
+
     fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Plot conversion rates as bars
     bars = ax.bar(index, conversion_rates, bar_width, label='Conversion Rate', color='skyblue')
+
+    # Plot drop-off rates as a line
     ax.plot(index, dropoff_rates, label='Drop-Off Rate', color='red', marker='o', linestyle='-', linewidth=2)
-    
-    # Annotate conversion and drop-off rates on the graph
+
+    # Annotate conversion rates on bars
     for i, bar in enumerate(bars):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() - 2, f'{conversion_rates[i]:.2f}%',
-                ha='center', color='black', fontsize=10)
-    for i in range(len(dropoff_rates)):
-        ax.text(index[i], dropoff_rates[i] + 2, f'{dropoff_rates[i]:.2f}%',
-                ha='center', color='red', fontsize=10)
-    
-    # Graph styling
-    ax.set_xlabel('Funnel Stage')
-    ax.set_ylabel('Rate (%)')
-    ax.set_title('Conversion Rate with Drop-Off Rate Overlay')
+        ax.text(
+            bar.get_x() + bar.get_width() / 2, bar.get_height() - 2,
+            f'{conversion_rates[i]:.2f}%',
+            ha='center', color='black', fontsize=10
+        )
+
+    # Annotate drop-off rates on line
+    for i, rate in enumerate(dropoff_rates):
+        ax.text(
+            index[i], rate + 2,
+            f'{rate:.2f}%',
+            ha='center', color='red', fontsize=10
+        )
+
+    # Style the plot
+    ax.set_xlabel('Funnel Stage', fontweight='bold')
+    ax.set_ylabel('Rate (%)', fontweight='bold')
+    ax.set_title('Conversion Rate with Drop-Off Rate Overlay', fontweight='bold')
     ax.set_xticks(index)
-    ax.set_xticklabels(funnel_stages, rotation=45)
+    ax.set_xticklabels(funnel_stages, rotation=45, ha='right')
     ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+
+    plt.tight_layout()
     st.pyplot(fig)
-    
-    # Drop-Off Rate Table
+
+    # Display Drop-Off Rate Table
     st.subheader("Drop-Off Rate (%) and Number of Customers")
     funnel_summary_df = pd.DataFrame({
         "Funnel Stage": funnel_stages,
-        "Customers": funnel_stage_counts,
-        "Conversion Rate (%)": conversion_rates,
-        "Drop-Off Rate (%)": dropoff_rates
+        "Customers": funnel_stage_counts.values,
+        "Conversion Rate (%)": conversion_rates.values,
+        "Drop-Off Rate (%)": dropoff_rates.values
     })
     st.table(funnel_summary_df.style.set_caption("Drop-Off Rate and Customers at Each Funnel Stage"))
 
-        # Add User Segmentation (Pie Chart)
-    st.header("User Segmentation by Funnel Progress")
-    
-    # Segment users based on funnel progress
+    # Add User Segmentation Analysis
+    st.subheader("User Segmentation by Funnel Progress")
+
     def segment_sessions(funnel_stages):
         if funnel_stages['Order Confirmation Page']:
             return 'Converted Users'
@@ -488,16 +531,23 @@ def funnel_analysis():
             return 'Engaged Users'
         else:
             return 'Abandoned Users'
-    
+
     df_behavioral['Segment'] = df_behavioral['Funnel Stages'].apply(segment_sessions)
     segment_counts = df_behavioral['Segment'].value_counts()
-    
-    # Create Pie Chart
+
+    # Create a Pie Chart for Segments
     fig_pie, ax_pie = plt.subplots(figsize=(8, 8))
-    colors = ['skyblue', 'orange', 'lightgreen']  # Colors for the segments
-    explode = (0.1, 0, 0)  # Slightly separate 'Converted Users' for emphasis
-    ax_pie.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%', startangle=140, explode=explode, colors=colors)
-    ax_pie.set_title('Session Segmentation by Funnel Progress', fontsize=14)
+    colors = ['skyblue', 'orange', 'lightgreen']
+    explode = (0.1, 0, 0)  # Emphasize Converted Users
+    ax_pie.pie(
+        segment_counts,
+        labels=segment_counts.index,
+        autopct='%1.1f%%',
+        startangle=140,
+        explode=explode,
+        colors=colors
+    )
+    ax_pie.set_title('Session Segmentation by Funnel Progress', fontsize=14, fontweight='bold')
     st.pyplot(fig_pie)
 
 
@@ -630,7 +680,6 @@ def inventory_analysis():
     st.table(category_summary)
 
 
-
 def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
     """Generate daily sales forecast for a specific product."""
     product_data = daily_sales[daily_sales['Product ID'] == product_id].set_index('Date')['Units Sold']
@@ -646,6 +695,12 @@ def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
     return pd.DataFrame({'Date': forecast_dates, 'Forecasted Sales': forecast_values})
 
 
+def calculate_avg_units(promotion_table):
+    # คำนวณค่าเฉลี่ยก่อน, ระหว่าง, และหลังโปรโมชัน
+    promotion_table['Avg Before Promo'] = promotion_table[['-3M', '-1M']].mean(axis=1)
+    promotion_table['Avg During Promo'] = promotion_table['During Promo']
+    promotion_table['Avg After Promo'] = promotion_table[['+1M', '+3M']].mean(axis=1)
+    return promotion_table[['Avg Before Promo', 'Avg During Promo', 'Avg After Promo']]
 
 def price_sensitivity():
     st.header("Price Sensitivity Analysis")
@@ -657,6 +712,18 @@ def price_sensitivity():
 
     df_merged['Timestamp Purchase'] = pd.to_datetime(df_merged['Timestamp Purchase'])
 
+    # Helper function to parse promotional periods
+    def get_promo_dates(df):
+        promo_dates = []
+        for period in df['Promotional Period'].dropna().unique():
+            try:
+                start_date, end_date = [datetime.strptime(date.strip(), "%Y-%m-%d") for date in period.split('to')]
+                promo_dates.append((start_date, end_date))
+            except ValueError:
+                st.warning(f"Invalid period format: {period}")
+        return promo_dates
+
+    # Classification function
     def classify_proximity_period(purchase_date, promo_dates):
         for start_date, end_date in promo_dates:
             three_months_before = start_date - timedelta(days=90)
@@ -676,18 +743,9 @@ def price_sensitivity():
                 return '+3M'
         return 'No Promotion'
 
-    def prepare_promotion_data(df, promo_type):
-        promo_data = df[df['Promotion Type'] == promo_type]
-        promo_dates = promo_data['Promotional Period'].dropna().unique()
-        dates = []
-        for period in promo_dates:
-            start_date, end_date = [datetime.strptime(date.strip(), "%Y-%m-%d") for date in period.split('to')]
-            dates.append((start_date, end_date))
-        df['Promotion Period Classification'] = df['Timestamp Purchase'].apply(lambda x: classify_proximity_period(x, dates))
-        
-        # กรองข้อมูล ไม่รวม "No Promotion"
-        df = df[df['Promotion Period Classification'] != 'No Promotion']
-        
+    # Prepare data for each promotion type
+    def prepare_promotion_data(df, promo_dates):
+        df['Promotion Period Classification'] = df['Timestamp Purchase'].apply(lambda x: classify_proximity_period(x, promo_dates))
         return df.groupby(['Promotion Period Classification', 'Product Category'])['Units Sold'].sum().reset_index()
 
     def create_promotion_table(aggregated_df):
@@ -695,65 +753,70 @@ def price_sensitivity():
             index='Product Category',
             columns='Promotion Period Classification',
             values='Units Sold'
-        ).fillna(0)  # Fill NaN with 0 for missing periods
+        ).fillna(0)  # Fill missing values with 0
         return pivot_table
 
-    def plot_promotion_data(aggregated_df, promo_type):
+    # Separate datasets by promotion type
+    buy1_get1_df = df_merged[df_merged['Promotion Type'] == 'Buy 1 Get 1 Free'].copy()
+    free_shipping_df = df_merged[df_merged['Promotion Type'] == 'Free Shipping'].copy()
+    discount_10_df = df_merged[df_merged['Promotion Type'] == '10% Off'].copy()
+    no_promotion_df = df_merged[df_merged['Promotion Type'] == 'No Promotion'].copy()
+
+    # Get promotional periods
+    buy1_get1_promo_dates = get_promo_dates(buy1_get1_df)
+    free_shipping_promo_dates = get_promo_dates(free_shipping_df)
+    discount_10_promo_dates = get_promo_dates(discount_10_df)
+
+    # Aggregate data
+    buy1_get1_aggregated = prepare_promotion_data(pd.concat([buy1_get1_df, no_promotion_df]), buy1_get1_promo_dates)
+    free_shipping_aggregated = prepare_promotion_data(pd.concat([free_shipping_df, no_promotion_df]), free_shipping_promo_dates)
+    discount_10_aggregated = prepare_promotion_data(pd.concat([discount_10_df, no_promotion_df]), discount_10_promo_dates)
+
+    # Plotting function
+    def plot_promotion_data(aggregated_df, promotion_type):
+        period_order = ['-3M', '-1M', 'During Promo', '+1M', '+3M']
+        aggregated_df['Promotion Period Classification'] = pd.Categorical(
+            aggregated_df['Promotion Period Classification'], categories=period_order, ordered=True
+        )
+
         plt.figure(figsize=(14, 8))
         sns.barplot(
             data=aggregated_df,
             x='Promotion Period Classification',
             y='Units Sold',
             hue='Product Category',
-            palette='Set2',
+            palette='Set1',
             errorbar=None
         )
-        plt.title(f"Units Sold by Promotion Period - {promo_type}")
+        plt.title(f"Units Sold by Promotion Period and Product Category - {promotion_type}")
         plt.xlabel("Promotion Period")
         plt.ylabel("Units Sold")
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.legend(title="Product Category", bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.xticks(rotation=45)
         plt.tight_layout()
         st.pyplot(plt)
 
-    # คำนวณค่าเฉลี่ยสำหรับเปรียบเทียบ
-    def calculate_avg_units(promotion_table):
-        promotion_table['Avg Before Promo'] = promotion_table[['-3M', '-1M']].mean(axis=1)
-        promotion_table['Avg During Promo'] = promotion_table['During Promo']
-        promotion_table['Avg After Promo'] = promotion_table[['+1M', '+3M']].mean(axis=1)
-        return promotion_table[['Avg Before Promo', 'Avg During Promo', 'Avg After Promo']]
-
-    # Process promotion types
-    promotion_types = [ptype for ptype in df_merged['Promotion Type'].unique() if ptype != 'No Promotion']
-
+    # Display results for each promotion type
     avg_comparison_list = []
+    for promo_type, aggregated_df, promo_title in [
+        ("Buy 1 Get 1 Free", buy1_get1_aggregated, "Buy 1 Get 1 Free"),
+        ("Free Shipping", free_shipping_aggregated, "Free Shipping"),
+        ("10% Off", discount_10_aggregated, "10% Off"),
+    ]:
+        st.subheader(f"Promotion Type: {promo_title}")
+        plot_promotion_data(aggregated_df, promo_type)
 
-    for promo_type in promotion_types:
-        aggregated = prepare_promotion_data(df_merged, promo_type)
-        st.subheader(f"Promotion Type: {promo_type}")
-
-        # Plot data (keep the graph)
-        plot_promotion_data(aggregated, promo_type)
-
-        # Generate updated tables
-        promotion_table = create_promotion_table(aggregated)
-
-        # Sort columns by period order but only include existing columns
-        period_order = ['-3M', '-1M', 'During Promo', '+1M', '+3M']
-        valid_columns = [col for col in period_order if col in promotion_table.columns]
-        promotion_table = promotion_table[valid_columns]
-
-        # Display the updated table
-        st.subheader(f"{promo_type} Units Sold Table")
+        # Create and display the table
+        promotion_table = create_promotion_table(aggregated_df)
         st.table(promotion_table)
 
-        # Calculate average units and collect for comparison
+        # Calculate and store average units
         avg_comparison_list.append(calculate_avg_units(promotion_table).mean())
 
     # Combine and plot comparison of promotion effectiveness
     avg_comparison = pd.concat(avg_comparison_list, axis=1)
-    avg_comparison.columns = promotion_types
+    avg_comparison.columns = ['Buy 1 Get 1 Free', 'Free Shipping', '10% Off']
 
-    # สลับตำแหน่งแสดงผล: แสดงกราฟก่อน
     st.subheader("Comparison of Promotion Effectiveness")
     fig, ax = plt.subplots(figsize=(12, 6))
     avg_comparison.T.plot(kind='bar', ax=ax, rot=0, cmap='Set2')
@@ -764,9 +827,7 @@ def price_sensitivity():
     ax.legend(title="Promotion Period", loc="upper left", bbox_to_anchor=(1.05, 1))
     st.pyplot(fig)
 
-    # แสดงตารางหลังกราฟ
     st.table(avg_comparison)
-
 
 
 # Main App with Login Check
