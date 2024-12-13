@@ -9,6 +9,7 @@ import numpy as np
 import plotly.graph_objects as go
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
+from matplotlib.colors import LinearSegmentedColormap
 
 # Hardcoded usernames and passwords (for demo purposes)
 USER_CREDENTIALS = {
@@ -110,26 +111,32 @@ def logout():
     st.session_state["username"] = None
 
 
-# Function Definitions for Each Page
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from itertools import combinations
-from collections import Counter
-import streamlit as st
+# Custom CSS to adjust header size
+st.markdown("""
+    <style>
+            
+         h2 {
+            font-size: 1.5rem !important; /* ปรับขนาดของ h1 */
+        }
+
+        h3 {
+            font-size: 0.7rem !important; /* Adjust subheader size */
+            
+        }
+            
+    </style>
+""", unsafe_allow_html=True)
 
 def browsing_pattern():
-    st.header("Browsing Pattern - Product Pair Heatmap")
+    st.header("Browsing Pattern Analysis")  # Main header stays as is
 
     # Generate product pairs and counts
     products_per_transaction = df_item.groupby('Transaction ID')['Product ID'].apply(list)
-
     product_pairs = []
     for products in products_per_transaction:
         if len(products) > 1:
             sorted_products = sorted(products)
             product_pairs.extend(list(combinations(sorted_products, 2)))
-
     pair_counts = Counter(product_pairs)
 
     df_pair_counts = pd.DataFrame(pair_counts.items(), columns=['Product Pair', 'Count'])
@@ -144,51 +151,62 @@ def browsing_pattern():
         for j in range(i):
             pivot_table.iloc[i, j] = 0
 
-    # Plot heatmap
-    fig, ax = plt.subplots(figsize=(16, 12))
-    sns.heatmap(pivot_table, annot=True, cmap="coolwarm", fmt='d', ax=ax, cbar_kws={'label': 'Number of Pairs'})
-    plt.xticks(rotation=90)
-    plt.yticks(rotation=0)
-    plt.title('Product Pair Heatmap: Frequently Bought Together')
-    plt.tight_layout()
-    st.pyplot(fig)
+    # Custom colormap
+    custom_palette = [
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', 'red'
+    ]
+    cmap = LinearSegmentedColormap.from_list("CustomPurplePinkRed", custom_palette)
 
-    # Display Top Cross-Selling Products
-    st.header("Best to Least Cross-Selling Products")
+    # Create a two-column layout for heatmap and distribution graph
+    col1, col2 = st.columns(2)
 
-    # Get top 10 products for each product
-    top_cross_selling = {}
-    for product in pivot_table.index:
-        sorted_products = pivot_table.loc[product].sort_values(ascending=False).head(10)
-        top_cross_selling[product] = sorted_products.index.tolist()
+    # Left column: Heatmap
+    with col1:
+        st.markdown("### Product Pair Heatmap")
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.heatmap(pivot_table, annot=True, cmap=cmap, fmt='d', ax=ax, cbar_kws={'label': 'Number of Pairs'})
+        plt.xticks(rotation=90)
+        plt.yticks(rotation=0)
+        plt.tight_layout()
+        st.pyplot(fig)
 
-    # Convert dictionary to a DataFrame for display
-    cross_selling_df = pd.DataFrame.from_dict(top_cross_selling, orient='index', columns=[f"Rank {i+1}" for i in range(10)])
-    cross_selling_df.index.name = "Product"
-    cross_selling_df.reset_index(inplace=True)
+    # Right column: Distribution of Product Pair Counts
+    with col2:
+        st.markdown("### Distribution of Product Pair Counts")
+        Q1 = df_pair_counts['Count'].quantile(0.25)
+        Q3 = df_pair_counts['Count'].quantile(0.75)
+        IQR = Q3 - Q1
+        upper_bound = Q3 + 1.5 * IQR
 
-    # Display as a styled table
-    st.table(cross_selling_df.style.set_caption("Top 10 Cross-Selling Products by Product"))
+        plt.figure(figsize=(8, 6))
+        sns.histplot(df_pair_counts['Count'], bins=30, kde=True, color="#A569BD", alpha=0.8)
+        plt.axvline(upper_bound, color='red', linestyle='--', label='Outstanding Threshold')
+        plt.xlabel('Count', fontsize=12)
+        plt.ylabel('Frequency', fontsize=12)
+        plt.legend()
+        st.pyplot(plt)
 
-    # Add Distribution Plot for Product Pair Counts
-    st.header("Distribution of Product Pair Counts")
-    Q1 = df_pair_counts['Count'].quantile(0.25)
-    Q3 = df_pair_counts['Count'].quantile(0.75)
-    IQR = Q3 - Q1
-    upper_bound = Q3 + 1.5 * IQR
+    # Create another two-column layout for tables
+    col3, col4 = st.columns(2)
 
-    plt.figure(figsize=(10, 6))
-    sns.histplot(df_pair_counts['Count'], bins=30, kde=True, color="skyblue", alpha=0.8)
-    plt.axvline(upper_bound, color='r', linestyle='--', label='Outstanding Threshold')
-    plt.title('Distribution of Product Pair Counts with Outstanding Threshold', fontsize=14)
-    plt.xlabel('Count', fontsize=12)
-    plt.ylabel('Frequency', fontsize=12)
-    plt.legend()
-    st.pyplot(plt)
+    # Left column: Best to Least Cross-Selling Products
+    with col3:
+        st.markdown("### Best to Least Cross-Selling Products")
+        top_cross_selling = {}
+        for product in pivot_table.index:
+            sorted_products = pivot_table.loc[product].sort_values(ascending=False).head(10)
+            top_cross_selling[product] = sorted_products.index.tolist()
 
-    # Display All Product Pairs in a Table
-    st.header("All Product Pairs and Counts")
-    st.dataframe(df_pair_counts[['Product Pair', 'Count', 'Product 1', 'Product 2']])
+        cross_selling_df = pd.DataFrame.from_dict(top_cross_selling, orient='index', columns=[f"Rank {i+1}" for i in range(10)])
+        cross_selling_df.index.name = "Product"
+        cross_selling_df.reset_index(inplace=True)
+        st.dataframe(cross_selling_df, height=400)
+
+    # Right column: All Product Pairs and Counts
+    with col4:
+        st.markdown("### All Product Pairs and Counts")
+        st.dataframe(df_pair_counts[['Product Pair', 'Count', 'Product 1', 'Product 2']])
 
 
 def forecast_sales_by_region_and_category(df, forecast_months=3):
@@ -296,10 +314,13 @@ def seasonal_and_geographic():
     max_units_sold = monthly_sales_summary['Units Sold'].max()
     monthly_sales_summary['Bubble Size'] = (monthly_sales_summary['Units Sold'] / max_units_sold) * 80
 
-    # Define regions and color map
+    # Define regions and assign custom palette from Price Sensitivity
     regions = monthly_sales_summary['Geographical Location'].unique()
-    color_palette = sns.color_palette("Set2", len(regions))
-    color_map = dict(zip(regions, color_palette))
+    custom_palette = [
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
+    ]
+    color_map = dict(zip(regions, custom_palette[:len(regions)]))
 
     # Get the latest year from the data
     latest_year = df_full['Year of Purchase'].max()
@@ -319,23 +340,14 @@ def seasonal_and_geographic():
     threshold_value = np.percentile(monthly_sales_summary['Units Sold'], percentile_threshold)
     filtered_sales_summary = monthly_sales_summary[monthly_sales_summary['Units Sold'] >= threshold_value]
 
-    # Add option to include forecast
-    include_forecast = st.sidebar.checkbox("Include Forecast Data", value=False)
-
-    # Generate forecast if selected
-    forecast_data = None
-    if include_forecast:
-        forecast_months = st.sidebar.slider("Forecast Months", min_value=1, max_value=12, value=3, step=1)
-        forecast_data = forecast_sales_by_region_and_category(df_full, forecast_months)
-
     # Generate the bubble chart for the selected year
-    def plot_sales_with_forecast(year, forecast_df=None):
+    def plot_sales_with_custom_colors(year):
         year_data = filtered_sales_summary[filtered_sales_summary['Year of Purchase'] == year]
         year_data['x_positions'] = year_data['Month of Purchase']
 
         fig = go.Figure()
 
-        # Add historical data to the plot
+        # Add data to the plot using the custom palette
         for region in regions:
             region_data = year_data[year_data['Geographical Location'] == region]
             fig.add_trace(go.Scatter(
@@ -344,7 +356,7 @@ def seasonal_and_geographic():
                 mode='markers',
                 marker=dict(
                     size=region_data['Bubble Size'],
-                    color=f"rgb({color_map[region][0]*255}, {color_map[region][1]*255}, {color_map[region][2]*255})",
+                    color=color_map[region],
                     opacity=0.8,
                     line=dict(width=1, color='DarkSlateGrey')
                 ),
@@ -358,34 +370,9 @@ def seasonal_and_geographic():
                 hoverinfo="text"
             ))
 
-        # Add forecast data to the plot
-        if forecast_df is not None:
-            forecast_year_data = forecast_df[forecast_df['Year of Purchase'] == year]
-            for region in regions:
-                forecast_region_data = forecast_year_data[forecast_year_data['Geographical Location'] == region]
-                fig.add_trace(go.Scatter(
-                    x=forecast_region_data['Month of Purchase'],
-                    y=forecast_region_data['Product Category'],
-                    mode='markers',
-                    marker=dict(
-                        size=forecast_region_data['Units Sold'] / max_units_sold * 80,
-                        color=f"rgb({color_map[region][0]*255}, {color_map[region][1]*255}, {color_map[region][2]*255})",
-                        opacity=0.4,
-                        line=dict(width=1, color='DarkSlateGrey')
-                    ),
-                    name=f"{region} (Forecast)",
-                    text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
-                          for month, category, units in zip(
-                              forecast_region_data['Month of Purchase'],
-                              forecast_region_data['Product Category'],
-                              forecast_region_data['Units Sold']
-                          )],
-                    hoverinfo="text",
-                    showlegend=False  # Avoid duplicate legend entries
-                ))
-
+        # Adjust layout to increase graph size and reduce whitespace
         fig.update_layout(
-            title=f"Monthly Sales with Forecast (Year: {year})",
+            title=f"Monthly Sales (Year: {year})",
             xaxis=dict(
                 title="Month of Purchase",
                 tickvals=list(range(1, 13)),
@@ -398,13 +385,13 @@ def seasonal_and_geographic():
                 categoryarray=monthly_sales_summary['Product Category'].unique(),
             ),
             legend_title="Region",
-            width=1200,
-            height=700,
-            margin=dict(l=50, r=50, t=80, b=50),
+            width=1400,  # Increase the width
+            height=800,  # Increase the height
+            margin=dict(l=20, r=20, t=50, b=20),  # Reduce whitespace
         )
         return fig
 
-    st.plotly_chart(plot_sales_with_forecast(selected_year, forecast_data), use_container_width=True)
+    st.plotly_chart(plot_sales_with_custom_colors(selected_year), use_container_width=True)
 
     # **New Table**: Average Units Sold Summary
     st.subheader("Average Units Sold by Year, Region, and Product Category")
@@ -472,21 +459,38 @@ def funnel_analysis():
     # Calculate drop-off rates
     dropoff_rates = 100 - conversion_rates
 
-    # Plot the funnel analysis
-    index = np.arange(len(funnel_stages))
-    bar_width = 0.35
+    # Create user segmentation for pie chart
+    def segment_sessions(funnel_stages):
+        if funnel_stages['Order Confirmation Page']:
+            return 'Converted Users'
+        elif funnel_stages['Cart Page']:
+            return 'Engaged Users'
+        else:
+            return 'Abandoned Users'
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    df_behavioral['Segment'] = df_behavioral['Funnel Stages'].apply(segment_sessions)
+    segment_counts = df_behavioral['Segment'].value_counts()
+
+    # Define custom purple-pink gradient palette
+    custom_palette = [
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
+    ]
+
+    # Plot the funnel analysis and pie chart side by side
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
 
     # Plot conversion rates as bars
-    bars = ax.bar(index, conversion_rates, bar_width, label='Conversion Rate', color='skyblue')
+    index = np.arange(len(funnel_stages))
+    bar_width = 0.35
+    bars = ax1.bar(index, conversion_rates, bar_width, label='Conversion Rate', color=custom_palette[3])
 
     # Plot drop-off rates as a line
-    ax.plot(index, dropoff_rates, label='Drop-Off Rate', color='red', marker='o', linestyle='-', linewidth=2)
+    ax1.plot(index, dropoff_rates, label='Drop-Off Rate', color=custom_palette[5], marker='o', linestyle='-', linewidth=2)
 
     # Annotate conversion rates on bars
     for i, bar in enumerate(bars):
-        ax.text(
+        ax1.text(
             bar.get_x() + bar.get_width() / 2, bar.get_height() - 2,
             f'{conversion_rates[i]:.2f}%',
             ha='center', color='black', fontsize=10
@@ -494,19 +498,32 @@ def funnel_analysis():
 
     # Annotate drop-off rates on line
     for i, rate in enumerate(dropoff_rates):
-        ax.text(
+        ax1.text(
             index[i], rate + 2,
             f'{rate:.2f}%',
-            ha='center', color='red', fontsize=10
+            ha='center', color='black', fontsize=10
         )
 
-    # Style the plot
-    ax.set_xlabel('Funnel Stage', fontweight='bold')
-    ax.set_ylabel('Rate (%)', fontweight='bold')
-    ax.set_title('Conversion Rate with Drop-Off Rate Overlay', fontweight='bold')
-    ax.set_xticks(index)
-    ax.set_xticklabels(funnel_stages, rotation=45, ha='right')
-    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+    # Style the funnel analysis plot
+    ax1.set_xlabel('Funnel Stage', fontweight='bold')
+    ax1.set_ylabel('Rate (%)', fontweight='bold')
+    ax1.set_title('Conversion Rate with Drop-Off Rate Overlay', fontweight='bold')
+    ax1.set_xticks(index)
+    ax1.set_xticklabels(funnel_stages, rotation=45, ha='right')
+    ax1.legend(loc='upper left')
+
+    # Plot the pie chart
+    colors = custom_palette[:3]  # Use the first three colors for the pie chart
+    explode = (0.1, 0, 0)  # Emphasize Converted Users
+    ax2.pie(
+        segment_counts,
+        labels=segment_counts.index,
+        autopct='%1.1f%%',
+        startangle=140,
+        explode=explode,
+        colors=colors
+    )
+    ax2.set_title('Session Segmentation by Funnel Progress', fontsize=14, fontweight='bold')
 
     plt.tight_layout()
     st.pyplot(fig)
@@ -521,37 +538,8 @@ def funnel_analysis():
     })
     st.table(funnel_summary_df.style.set_caption("Drop-Off Rate and Customers at Each Funnel Stage"))
 
-    # Add User Segmentation Analysis
-    st.subheader("User Segmentation by Funnel Progress")
 
-    def segment_sessions(funnel_stages):
-        if funnel_stages['Order Confirmation Page']:
-            return 'Converted Users'
-        elif funnel_stages['Cart Page']:
-            return 'Engaged Users'
-        else:
-            return 'Abandoned Users'
-
-    df_behavioral['Segment'] = df_behavioral['Funnel Stages'].apply(segment_sessions)
-    segment_counts = df_behavioral['Segment'].value_counts()
-
-    # Create a Pie Chart for Segments
-    fig_pie, ax_pie = plt.subplots(figsize=(8, 8))
-    colors = ['skyblue', 'orange', 'lightgreen']
-    explode = (0.1, 0, 0)  # Emphasize Converted Users
-    ax_pie.pie(
-        segment_counts,
-        labels=segment_counts.index,
-        autopct='%1.1f%%',
-        startangle=140,
-        explode=explode,
-        colors=colors
-    )
-    ax_pie.set_title('Session Segmentation by Funnel Progress', fontsize=14, fontweight='bold')
-    st.pyplot(fig_pie)
-
-
-def inventory_analysis(): 
+def inventory_analysis():
     st.header("Inventory Analysis")
 
     global df_inventory, df_item, df_transaction
@@ -606,6 +594,12 @@ def inventory_analysis():
     st.sidebar.subheader("Graph Type")
     graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
 
+    # Use the same custom purple-pink gradient palette from Price Sensitivity
+    custom_palette = [
+        '##E8DAEF', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
+    ]
+
     # Historical and Predictive graphs
     fig, ax = plt.subplots(figsize=(20, 7))
 
@@ -613,14 +607,14 @@ def inventory_analysis():
         bars = ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=['skyblue' if status == 'In Stock' else 'red' for status in df_inventory['Stock Status']],
-            alpha=0.7,
+            color=[custom_palette[3] if status == 'In Stock' else custom_palette[6] for status in df_inventory['Stock Status']],
+            alpha=0.8,
             label='Current Stock'
         )
         ax.plot(
             df_inventory['Product ID'],
             df_inventory['Reorder Point'],
-            color='gray',
+            color=custom_palette[8],
             marker='o',
             linewidth=1.5,
             label='Reorder Point'
@@ -635,22 +629,22 @@ def inventory_analysis():
         bars = ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=['skyblue' if status == 'In Stock' else 'red' for status in df_inventory['Stock Status']],
-            alpha=0.7,
+            color=[custom_palette[3] if status == 'In Stock' else custom_palette[6] for status in df_inventory['Stock Status']],
+            alpha=0.8,
             label='Current Stock'
         )
         ax.bar(
             df_inventory['Product ID'],
             df_inventory['Forecasted Sales'],
             bottom=df_inventory['Current Stock'],
-            color='orange',
-            alpha=0.7,
+            color='#F5EEF8',  # Very light purple-pink
+            alpha=1,  # Reduced transparency
             label='Forecasted Sales'
         )
         ax.plot(
             df_inventory['Product ID'],
             df_inventory['Reorder Point'],
-            color='gray',
+            color=custom_palette[8],
             marker='o',
             linewidth=1.5,
             label='Reorder Point'
@@ -666,18 +660,21 @@ def inventory_analysis():
     plt.tight_layout()
     st.pyplot(fig)
 
-    # Stock Status Summary
-    st.subheader("Stock Status Summary")
-    stock_status_summary = df_inventory.groupby('Stock Status').agg(Number_of_Types=('Product ID', 'nunique')).reset_index()
-    st.table(stock_status_summary)
+    # Stock Status Summary and Product Category Summary side by side
+    col1, col2 = st.columns(2)
 
-    # Product Category Summary
-    st.subheader("Product Category Summary")
-    category_summary = df_inventory.groupby('Product Category').agg(
-        Number_of_Product=('Product ID', 'nunique'),
-        Average_Stock_Level=('Current Stock', 'mean')
-    ).reset_index()
-    st.table(category_summary)
+    with col1:
+        st.subheader("Stock Status")
+        stock_status_summary = df_inventory.groupby('Stock Status').agg(Number_of_Types=('Product ID', 'nunique')).reset_index()
+        st.table(stock_status_summary)
+
+    with col2:
+        st.subheader("Product Category")
+        category_summary = df_inventory.groupby('Product Category').agg(
+            Number_of_Product=('Product ID', 'nunique'),
+            Average_Stock_Level=('Current Stock', 'mean')
+        ).reset_index()
+        st.table(category_summary)
 
 
 def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
@@ -772,6 +769,12 @@ def price_sensitivity():
     free_shipping_aggregated = prepare_promotion_data(pd.concat([free_shipping_df, no_promotion_df]), free_shipping_promo_dates)
     discount_10_aggregated = prepare_promotion_data(pd.concat([discount_10_df, no_promotion_df]), discount_10_promo_dates)
 
+    # Custom purple-pink gradient palette
+    custom_palette = [
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
+    ]
+
     # Plotting function
     def plot_promotion_data(aggregated_df, promotion_type):
         period_order = ['-3M', '-1M', 'During Promo', '+1M', '+3M']
@@ -785,7 +788,7 @@ def price_sensitivity():
             x='Promotion Period Classification',
             y='Units Sold',
             hue='Product Category',
-            palette='Set1',
+            palette=custom_palette,  # Use the new purple-pink gradient palette
             errorbar=None
         )
         plt.title(f"Units Sold by Promotion Period and Product Category - {promotion_type}")
@@ -819,7 +822,7 @@ def price_sensitivity():
 
     st.subheader("Comparison of Promotion Effectiveness")
     fig, ax = plt.subplots(figsize=(12, 6))
-    avg_comparison.T.plot(kind='bar', ax=ax, rot=0, cmap='Set2')
+    avg_comparison.T.plot(kind='bar', ax=ax, rot=0, color=custom_palette[:len(avg_comparison.columns)])  # Use palette for consistency
 
     ax.set_title("Comparison of Promotion Effectiveness by Average Units Sold")
     ax.set_xlabel("Promotion Type")
