@@ -549,9 +549,11 @@ def inventory_analysis():
         st.error("Datasets are not loaded properly.")
         return
 
-    # Merge transaction data with item data
+    # Merge 'Timestamp Purchase' from df_transaction into df_item
     df_transaction['Timestamp Purchase'] = pd.to_datetime(df_transaction['Timestamp Purchase'])
-    df_item = df_item.merge(df_transaction[['Transaction ID', 'Timestamp Purchase']], on='Transaction ID', suffixes=('', '_Transaction'))
+    df_item = pd.merge(df_item, df_transaction[['Transaction ID', 'Timestamp Purchase']], on='Transaction ID', how='left')
+
+    # Convert 'Timestamp Purchase' to 'Date'
     df_item['Date'] = df_item['Timestamp Purchase'].dt.date
 
     # Calculate daily sales and average daily sales
@@ -594,20 +596,22 @@ def inventory_analysis():
     st.sidebar.subheader("Graph Type")
     graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
 
-    # Use the same custom purple-pink gradient palette from Price Sensitivity
+    # Define custom purple-pink gradient palette
     custom_palette = [
-        '##E8DAEF', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
         '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
     ]
 
-    # Historical and Predictive graphs
     fig, ax = plt.subplots(figsize=(20, 7))
 
     if graph_type == "Historical":
         bars = ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=[custom_palette[3] if status == 'In Stock' else custom_palette[6] for status in df_inventory['Stock Status']],
+            color=[
+                custom_palette[3] if status == 'In Stock' else custom_palette[6]
+                for status in df_inventory['Stock Status']
+            ],
             alpha=0.8,
             label='Current Stock'
         )
@@ -620,38 +624,44 @@ def inventory_analysis():
             label='Reorder Point'
         )
     elif graph_type == "Predictive":
-        # Add forecasted sales for predictive analysis
         forecast_days = 30
-        forecasted_sales = {product_id: forecast_daily_sales(product_id, daily_sales, forecast_days)['Forecasted Sales'].sum()
-                            for product_id in df_inventory['Product ID']}
+
+        # Generate forecasted sales
+        forecasted_sales = {
+            product_id: forecast_daily_sales(product_id, daily_sales, forecast_days)['Forecasted Sales'].sum()
+            for product_id in df_inventory['Product ID']
+        }
         df_inventory['Forecasted Sales'] = df_inventory['Product ID'].map(forecasted_sales)
 
+        # Calculate additional units needed
+        df_inventory['Additional Units Needed'] = df_inventory['Forecasted Sales'] - df_inventory['Current Stock']
+        df_inventory['Additional Units Needed'] = df_inventory['Additional Units Needed'].apply(lambda x: max(x, 0))
+
+        # Plot bars for current stock
         bars = ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=[custom_palette[3] if status == 'In Stock' else custom_palette[6] for status in df_inventory['Stock Status']],
+            color=[
+                custom_palette[7] if row['Current Stock'] < row['Reorder Point'] else custom_palette[3]
+                for _, row in df_inventory.iterrows()
+            ],
             alpha=0.8,
             label='Current Stock'
         )
+
+        # Plot additional units needed
         ax.bar(
             df_inventory['Product ID'],
-            df_inventory['Forecasted Sales'],
+            df_inventory['Additional Units Needed'],
             bottom=df_inventory['Current Stock'],
-            color='#F5EEF8',  # Very light purple-pink
-            alpha=1,  # Reduced transparency
-            label='Forecasted Sales'
-        )
-        ax.plot(
-            df_inventory['Product ID'],
-            df_inventory['Reorder Point'],
-            color=custom_palette[8],
-            marker='o',
-            linewidth=1.5,
-            label='Reorder Point'
+            color='#E8DAEF',  # Lighter color for additional units needed
+            alpha=0.8,
+            label='Additional Units Needed'
         )
 
     ax.set_xlabel('Product ID', fontweight='bold', fontsize=12)
     ax.set_ylabel('Units', fontweight='bold', fontsize=12)
+    ax.set_ylim(0, 100)  # Ensure consistent scale
     ax.set_title('Inventory Levels and Reorder Points', fontweight='bold', fontsize=14)
     ax.set_xticks(range(len(df_inventory['Product ID'])))
     ax.set_xticklabels(df_inventory['Product ID'], rotation=45, ha='right', fontsize=9)
@@ -675,6 +685,19 @@ def inventory_analysis():
             Average_Stock_Level=('Current Stock', 'mean')
         ).reset_index()
         st.table(category_summary)
+
+def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
+    product_data = daily_sales[daily_sales['Product ID'] == product_id].set_index('Date')['Units Sold']
+    if len(product_data) < 10:
+        return pd.DataFrame({'Date': [], 'Forecasted Sales': []})
+
+    model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))
+    results = model.fit(disp=False)
+    forecast = results.get_forecast(steps=forecast_days)
+    forecast_values = forecast.predicted_mean
+
+    forecast_dates = pd.date_range(start=product_data.index.max() + timedelta(days=1), periods=forecast_days)
+    return pd.DataFrame({'Date': forecast_dates, 'Forecasted Sales': forecast_values})
 
 
 def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
