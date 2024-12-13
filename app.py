@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import numpy as np
 import plotly.graph_objects as go
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 # Hardcoded usernames and passwords (for demo purposes)
 USER_CREDENTIALS = {
@@ -147,6 +148,110 @@ def browsing_pattern():
     # Display as a styled table
     st.table(cross_selling_df.style.set_caption("Top 10 Cross-Selling Products by Product"))
 
+    # Add Distribution Plot for Product Pair Counts
+    st.header("Distribution of Product Pair Counts")
+    Q1 = df_pair_counts['Count'].quantile(0.25)
+    Q3 = df_pair_counts['Count'].quantile(0.75)
+    IQR = Q3 - Q1
+    upper_bound = Q3 + 1.5 * IQR
+
+    plt.figure(figsize=(10, 6))
+    sns.histplot(df_pair_counts['Count'], bins=30, kde=True, color="skyblue", alpha=0.8)
+    plt.axvline(upper_bound, color='r', linestyle='--', label='Outstanding Threshold')
+    plt.title('Distribution of Product Pair Counts with Outstanding Threshold', fontsize=14)
+    plt.xlabel('Count', fontsize=12)
+    plt.ylabel('Frequency', fontsize=12)
+    plt.legend()
+    st.pyplot(plt)
+
+    # Display All Product Pairs in a Table
+    st.header("All Product Pairs and Counts")
+    st.dataframe(df_pair_counts[['Product Pair', 'Count', 'Product 1', 'Product 2']])
+
+
+def forecast_sales_by_region_and_category(df, forecast_months=3):
+    """
+    Forecast sales by region and product category using all available data across years.
+    Dynamically starts forecasting from the latest available date in the dataset.
+    """
+    forecast_results = []
+
+    # Determine the latest year and month in the dataset
+    latest_year = df['Year of Purchase'].max()
+    latest_month = df[df['Year of Purchase'] == latest_year]['Month of Purchase'].max()
+
+    # Group data by region and product category
+    grouped = df.groupby(['Geographical Location', 'Product Category'])
+
+    for (region, category), data in grouped:
+        # Aggregate monthly sales across all years
+        monthly_sales = data.groupby(['Year of Purchase', 'Month of Purchase'])['Units Sold'].sum()
+        monthly_sales = monthly_sales.unstack(level=0).stack().reindex(
+            pd.MultiIndex.from_product(
+                [range(1, 13), sorted(df['Year of Purchase'].unique())],
+                names=['Month', 'Year']
+            ),
+            fill_value=0
+        )
+
+        # Flatten the index for ExponentialSmoothing
+        monthly_sales = monthly_sales.reset_index(level=1, drop=True)
+        try:
+            # Create a proper time index for the monthly sales
+            start_date = f"{df['Year of Purchase'].min()}-01-01"
+            monthly_sales.index = pd.date_range(
+                start=start_date,
+                periods=len(monthly_sales),
+                freq='M'  # Month-end frequency
+            )
+
+            # Fit Holt-Winters model using all historical data
+            model = ExponentialSmoothing(monthly_sales, seasonal='add', seasonal_periods=12)
+            fit = model.fit()
+        except Exception as e:
+            logging.warning(f"Insufficient data or error for region: {region}, category: {category}. Using fallback model. Error: {e}")
+            # Fallback to a simple average
+            forecast = [monthly_sales.mean()] * forecast_months
+            forecast_df = pd.DataFrame({
+                'Geographical Location': region,
+                'Product Category': category,
+                'Month of Purchase': range(latest_month + 1, latest_month + 1 + forecast_months),
+                'Units Sold': forecast
+            })
+            forecast_results.append(forecast_df)
+            continue
+
+        # Forecast next months dynamically
+        forecast = fit.forecast(forecast_months)
+
+        # Handle year-end wrap-around for forecasted months
+        forecast_months_adjusted = []
+        current_month = latest_month
+        current_year = latest_year
+        for _ in range(forecast_months):
+            current_month += 1
+            if current_month > 12:
+                current_month = 1
+                current_year += 1
+            forecast_months_adjusted.append((current_year, current_month))
+
+        forecast_df = pd.DataFrame({
+            'Geographical Location': region,
+            'Product Category': category,
+            'Year of Purchase': [x[0] for x in forecast_months_adjusted],
+            'Month of Purchase': [x[1] for x in forecast_months_adjusted],
+            'Units Sold': forecast
+        })
+        forecast_results.append(forecast_df)
+
+    # Combine all forecasts
+    if forecast_results:
+        forecast_data = pd.concat(forecast_results, ignore_index=True)
+    else:
+        forecast_data = pd.DataFrame(columns=['Geographical Location', 'Product Category', 'Year of Purchase', 'Month of Purchase', 'Units Sold'])
+
+    return forecast_data
+
 
 def seasonal_and_geographic():
     st.header("Seasonal & Geographic Analysis")
@@ -174,15 +279,41 @@ def seasonal_and_geographic():
     color_palette = sns.color_palette("Set2", len(regions))
     color_map = dict(zip(regions, color_palette))
 
-    # Dropdown menu to select year
-    selected_year = st.selectbox("Select Year for Analysis", options=[2022, 2023, 2024])
+    # Get the latest year from the data
+    latest_year = df_full['Year of Purchase'].max()
+
+    # Dropdown menu to select year with default as the latest year
+    selected_year = st.selectbox(
+        "Select Year for Analysis",
+        options=sorted(df_full['Year of Purchase'].unique()),
+        index=list(sorted(df_full['Year of Purchase'].unique())).index(latest_year)
+    )
+
+    # Add input for Percentile threshold
+    st.sidebar.subheader("Percentile Filter")
+    percentile_threshold = st.sidebar.slider("Select Percentile (%)", min_value=0, max_value=100, value=90, step=1)
+
+    # Filter data based on Percentile
+    threshold_value = np.percentile(monthly_sales_summary['Units Sold'], percentile_threshold)
+    filtered_sales_summary = monthly_sales_summary[monthly_sales_summary['Units Sold'] >= threshold_value]
+
+    # Add option to include forecast
+    include_forecast = st.sidebar.checkbox("Include Forecast Data", value=False)
+
+    # Generate forecast if selected
+    forecast_data = None
+    if include_forecast:
+        forecast_months = st.sidebar.slider("Forecast Months", min_value=1, max_value=12, value=3, step=1)
+        forecast_data = forecast_sales_by_region_and_category(df_full, forecast_months)
 
     # Generate the bubble chart for the selected year
-    def plot_sales_for_year(year):
-        year_data = monthly_sales_summary[monthly_sales_summary['Year of Purchase'] == year]
+    def plot_sales_with_forecast(year, forecast_df=None):
+        year_data = filtered_sales_summary[filtered_sales_summary['Year of Purchase'] == year]
         year_data['x_positions'] = year_data['Month of Purchase']
 
         fig = go.Figure()
+
+        # Add historical data to the plot
         for region in regions:
             region_data = year_data[year_data['Geographical Location'] == region]
             fig.add_trace(go.Scatter(
@@ -195,7 +326,7 @@ def seasonal_and_geographic():
                     opacity=0.8,
                     line=dict(width=1, color='DarkSlateGrey')
                 ),
-                name=region,
+                name=f"{region} (Historical)",
                 text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
                       for month, category, units in zip(
                           region_data['Month of Purchase'],
@@ -205,8 +336,34 @@ def seasonal_and_geographic():
                 hoverinfo="text"
             ))
 
+        # Add forecast data to the plot
+        if forecast_df is not None:
+            forecast_year_data = forecast_df[forecast_df['Year of Purchase'] == year]
+            for region in regions:
+                forecast_region_data = forecast_year_data[forecast_year_data['Geographical Location'] == region]
+                fig.add_trace(go.Scatter(
+                    x=forecast_region_data['Month of Purchase'],
+                    y=forecast_region_data['Product Category'],
+                    mode='markers',
+                    marker=dict(
+                        size=forecast_region_data['Units Sold'] / max_units_sold * 80,
+                        color=f"rgb({color_map[region][0]*255}, {color_map[region][1]*255}, {color_map[region][2]*255})",
+                        opacity=0.4,
+                        line=dict(width=1, color='DarkSlateGrey')
+                    ),
+                    name=f"{region} (Forecast)",
+                    text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
+                          for month, category, units in zip(
+                              forecast_region_data['Month of Purchase'],
+                              forecast_region_data['Product Category'],
+                              forecast_region_data['Units Sold']
+                          )],
+                    hoverinfo="text",
+                    showlegend=False  # Avoid duplicate legend entries
+                ))
+
         fig.update_layout(
-            title=f"Monthly Sales by Product Category for Year {year}",
+            title=f"Monthly Sales with Forecast (Year: {year})",
             xaxis=dict(
                 title="Month of Purchase",
                 tickvals=list(range(1, 13)),
@@ -225,32 +382,46 @@ def seasonal_and_geographic():
         )
         return fig
 
-    st.plotly_chart(plot_sales_for_year(selected_year), use_container_width=True)
+    st.plotly_chart(plot_sales_with_forecast(selected_year, forecast_data), use_container_width=True)
 
-    # "Best Selling Months and Categories" Table
-    st.subheader("Best Selling Months and Categories")
+    # **New Table**: Average Units Sold Summary
+    st.subheader("Average Units Sold by Year, Region, and Product Category")
+    avg_units_sold_summary = df_full.groupby(
+        ['Year of Purchase', 'Geographical Location', 'Product Category']
+    ).agg({'Units Sold': 'mean'}).reset_index()
 
-    best_selling = df_full[df_full['Year of Purchase'] == selected_year].groupby(
-        ['Geographical Location', 'Month Name', 'Product Category']
-    )['Units Sold'].sum().reset_index()
+    avg_units_sold_summary.rename(columns={'Units Sold': 'Avg Units Sold'}, inplace=True)
+    avg_units_sold_summary = avg_units_sold_summary.sort_values(
+        ['Year of Purchase', 'Geographical Location', 'Avg Units Sold'], ascending=[True, True, False]
+    )
 
-    best_selling['Rank'] = best_selling.groupby('Geographical Location')['Units Sold'].rank(method='dense', ascending=False)
+    # **Checkbox Filters**
+    st.sidebar.subheader("Filters")
+    selected_years = st.sidebar.multiselect(
+        "Select Year(s)", 
+        options=avg_units_sold_summary['Year of Purchase'].unique(), 
+        default=avg_units_sold_summary['Year of Purchase'].unique()
+    )
+    selected_regions = st.sidebar.multiselect(
+        "Select Region(s)", 
+        options=avg_units_sold_summary['Geographical Location'].unique(), 
+        default=avg_units_sold_summary['Geographical Location'].unique()
+    )
+    selected_categories = st.sidebar.multiselect(
+        "Select Product Category(ies)", 
+        options=avg_units_sold_summary['Product Category'].unique(), 
+        default=avg_units_sold_summary['Product Category'].unique()
+    )
 
-    # Filter top categories for each region
-    top_categories = best_selling[best_selling['Rank'] <= 3].sort_values(by=['Geographical Location', 'Rank'])
+    # Apply filters
+    filtered_summary = avg_units_sold_summary[
+        (avg_units_sold_summary['Year of Purchase'].isin(selected_years)) &
+        (avg_units_sold_summary['Geographical Location'].isin(selected_regions)) &
+        (avg_units_sold_summary['Product Category'].isin(selected_categories))
+    ]
 
-    # Display regional tables
-    for region in regions:
-        st.subheader(f"Region: {region}")
-        regional_data = top_categories[top_categories['Geographical Location'] == region]
-        st.table(
-            regional_data.pivot_table(
-                index='Month Name',
-                columns='Rank',
-                values='Product Category',
-                aggfunc=lambda x: ' & '.join(x) if isinstance(x, pd.Series) else x
-            ).fillna('-')
-        )
+    # Display the filtered table
+    st.table(filtered_summary)
     
 
 def funnel_analysis():
@@ -306,19 +477,44 @@ def funnel_analysis():
     })
     st.table(funnel_summary_df.style.set_caption("Drop-Off Rate and Customers at Each Funnel Stage"))
 
+        # Add User Segmentation (Pie Chart)
+    st.header("User Segmentation by Funnel Progress")
+    
+    # Segment users based on funnel progress
+    def segment_sessions(funnel_stages):
+        if funnel_stages['Order Confirmation Page']:
+            return 'Converted Users'
+        elif funnel_stages['Cart Page']:
+            return 'Engaged Users'
+        else:
+            return 'Abandoned Users'
+    
+    df_behavioral['Segment'] = df_behavioral['Funnel Stages'].apply(segment_sessions)
+    segment_counts = df_behavioral['Segment'].value_counts()
+    
+    # Create Pie Chart
+    fig_pie, ax_pie = plt.subplots(figsize=(8, 8))
+    colors = ['skyblue', 'orange', 'lightgreen']  # Colors for the segments
+    explode = (0.1, 0, 0)  # Slightly separate 'Converted Users' for emphasis
+    ax_pie.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%', startangle=140, explode=explode, colors=colors)
+    ax_pie.set_title('Session Segmentation by Funnel Progress', fontsize=14)
+    st.pyplot(fig_pie)
 
-def inventory_analysis():
+
+def inventory_analysis(): 
     st.header("Inventory Analysis")
 
-    global df_inventory
+    global df_inventory, df_item, df_transaction
 
-    if df_inventory is None or 'Product ID' not in df_inventory.columns or 'Current Stock' not in df_inventory.columns:
-        st.error("The inventory dataset is not loaded properly or missing required columns.")
+    # Ensure datasets are properly loaded
+    if df_inventory is None or df_item is None or df_transaction is None:
+        st.error("Datasets are not loaded properly.")
         return
 
-    # Ensure Timestamp Purchase is in datetime format
+    # Merge transaction data with item data
     df_transaction['Timestamp Purchase'] = pd.to_datetime(df_transaction['Timestamp Purchase'])
-    df_item['Date'] = df_transaction['Timestamp Purchase'].dt.date
+    df_item = df_item.merge(df_transaction[['Transaction ID', 'Timestamp Purchase']], on='Transaction ID', suffixes=('', '_Transaction'))
+    df_item['Date'] = df_item['Timestamp Purchase'].dt.date
 
     # Calculate daily sales and average daily sales
     daily_sales = df_item.groupby(['Product ID', 'Date'])['Units Sold'].sum().reset_index()
@@ -328,110 +524,127 @@ def inventory_analysis():
     # Merge average daily sales into inventory dataframe
     df_inventory = df_inventory.merge(average_daily_sales, on='Product ID', how='left')
 
-    # Add a column for reorder points with default values
-    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * 3  # Default value
+    # Define lead times based on product categories
+    category_lead_times = {
+        'Clothing': 5,
+        'Sports & Outdoors': 7,
+        'Home & Kitchen': 10,
+        'Electronics': 15,
+        'Personal Care': 3,
+        'Kid Products': 6,
+        'Grocery': 2,
+        'Books': 8,
+        'Pet Supplies': 5
+    }
+    df_inventory['Lead Time'] = df_inventory['Product Category'].map(category_lead_times)
 
-    # Allow users to set reorder points manually
-    st.subheader("Set Custom Reorder Points")
-    for i, row in df_inventory.iterrows():
-        new_reorder_point = st.number_input(
-            f"Reorder Point for {row['Product ID']} ({row['Product Name']})",
-            min_value=0.0,
-            value=float(row['Reorder Point']),
-            step=1.0,
-            key=f"reorder_{i}"
+    # Calculate Reorder Point
+    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * df_inventory['Lead Time']
+
+    # Stock status calculation
+    def determine_stock_status(row):
+        if row['Current Stock'] >= row['Reorder Point']:
+            return 'In Stock'
+        elif 0 < row['Current Stock'] < row['Reorder Point']:
+            return 'Low Stock'
+        else:
+            return 'Out of Stock'
+
+    df_inventory['Stock Status'] = df_inventory.apply(determine_stock_status, axis=1)
+
+    # Sidebar to toggle between graph types
+    st.sidebar.subheader("Graph Type")
+    graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
+
+    # Historical and Predictive graphs
+    fig, ax = plt.subplots(figsize=(20, 7))
+
+    if graph_type == "Historical":
+        bars = ax.bar(
+            df_inventory['Product ID'],
+            df_inventory['Current Stock'],
+            color=['skyblue' if status == 'In Stock' else 'red' for status in df_inventory['Stock Status']],
+            alpha=0.7,
+            label='Current Stock'
         )
-        df_inventory.at[i, 'Reorder Point'] = new_reorder_point
-
-    # Fill missing values
-    df_inventory['Current Stock'] = df_inventory['Current Stock'].fillna(0)
-    df_inventory['Reorder Point'] = df_inventory['Reorder Point'].fillna(0)
-
-    # SARIMAX Forecast Function
-    def forecast_daily_sales(product_id, forecast_days=30):
-        product_data = daily_sales[daily_sales['Product ID'] == product_id][['Date', 'Units Sold']].set_index('Date')
-
-        if len(product_data) < 10:
-            return pd.Series([0] * forecast_days, index=pd.date_range(product_data.index.max() + timedelta(days=1), periods=forecast_days))
-
-        model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))
-        results = model.fit(disp=False)
-        forecast = results.get_forecast(steps=forecast_days)
-        return forecast.predicted_mean
-
-    forecast_days = 30
-    forecasted_sales = {product_id: forecast_daily_sales(product_id, forecast_days).sum() for product_id in df_inventory['Product ID']}
-    df_inventory['Forecasted Sales'] = df_inventory['Product ID'].map(forecasted_sales)
-
-    # Calculate additional units needed
-    df_inventory['Additional Units Needed'] = df_inventory['Forecasted Sales'] - df_inventory['Current Stock']
-    df_inventory['Additional Units Needed'] = df_inventory['Additional Units Needed'].apply(lambda x: max(x, 0))
-
-    # Determine colors for bars
-    bar_colors = ['red' if stock < reorder else 'skyblue' for stock, reorder in zip(df_inventory['Current Stock'], df_inventory['Reorder Point'])]
-
-    # Plot Inventory Levels and Forecasted Needs
-    fig, ax = plt.subplots(figsize=(18, 8))
-    product_ids = df_inventory['Product ID']
-
-    ax.bar(
-        product_ids,
-        df_inventory['Current Stock'],
-        color=bar_colors,
-        alpha=0.7,
-        label='Current Stock'
-    )
-
-    ax.bar(
-        product_ids,
-        df_inventory['Additional Units Needed'],
-        bottom=df_inventory['Current Stock'],
-        color='orange',
-        alpha=0.7,
-        label='Additional Units Needed'
-    )
-
-    ax.plot(
-        product_ids,
-        df_inventory['Reorder Point'],
-        color='gray',
-        marker='o',
-        label='Reorder Point'
-    )
-
-    for i, product_id in enumerate(product_ids):
-        current_stock = df_inventory.loc[i, 'Current Stock']
-        additional_units = df_inventory.loc[i, 'Additional Units Needed']
-        reorder_point = df_inventory.loc[i, 'Reorder Point']
-
-        ax.text(
-            i,
-            current_stock + additional_units + 1,
-            f"{int(current_stock)}",
-            ha='center',
-            fontsize=8
-        )
-        ax.text(
-            i,
-            reorder_point + 1,
-            f"{int(reorder_point)}",
-            ha='center',
+        ax.plot(
+            df_inventory['Product ID'],
+            df_inventory['Reorder Point'],
             color='gray',
-            fontsize=8
+            marker='o',
+            linewidth=1.5,
+            label='Reorder Point'
+        )
+    elif graph_type == "Predictive":
+        # Add forecasted sales for predictive analysis
+        forecast_days = 30
+        forecasted_sales = {product_id: forecast_daily_sales(product_id, daily_sales, forecast_days)['Forecasted Sales'].sum()
+                            for product_id in df_inventory['Product ID']}
+        df_inventory['Forecasted Sales'] = df_inventory['Product ID'].map(forecasted_sales)
+
+        bars = ax.bar(
+            df_inventory['Product ID'],
+            df_inventory['Current Stock'],
+            color=['skyblue' if status == 'In Stock' else 'red' for status in df_inventory['Stock Status']],
+            alpha=0.7,
+            label='Current Stock'
+        )
+        ax.bar(
+            df_inventory['Product ID'],
+            df_inventory['Forecasted Sales'],
+            bottom=df_inventory['Current Stock'],
+            color='orange',
+            alpha=0.7,
+            label='Forecasted Sales'
+        )
+        ax.plot(
+            df_inventory['Product ID'],
+            df_inventory['Reorder Point'],
+            color='gray',
+            marker='o',
+            linewidth=1.5,
+            label='Reorder Point'
         )
 
-    ax.set_xticks(range(len(product_ids)))
-    ax.set_xticklabels(product_ids, rotation=45, ha='right', fontsize=9)
-    ax.set_xlabel('Products', fontsize=10, fontweight='bold')
-    ax.set_ylabel('Units', fontsize=10, fontweight='bold')
-    ax.set_title('Inventory Levels and Forecasted Needs', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Product ID', fontweight='bold', fontsize=12)
+    ax.set_ylabel('Units', fontweight='bold', fontsize=12)
+    ax.set_title('Inventory Levels and Reorder Points', fontweight='bold', fontsize=14)
+    ax.set_xticks(range(len(df_inventory['Product ID'])))
+    ax.set_xticklabels(df_inventory['Product ID'], rotation=45, ha='right', fontsize=9)
     ax.legend()
 
     plt.tight_layout()
     st.pyplot(fig)
 
-    st.subheader("Inventory Forecast and Analysis")
-    st.table(df_inventory[['Product ID', 'Product Name', 'Current Stock', 'Reorder Point', 'Forecasted Sales', 'Additional Units Needed']])
+    # Stock Status Summary
+    st.subheader("Stock Status Summary")
+    stock_status_summary = df_inventory.groupby('Stock Status').agg(Number_of_Types=('Product ID', 'nunique')).reset_index()
+    st.table(stock_status_summary)
+
+    # Product Category Summary
+    st.subheader("Product Category Summary")
+    category_summary = df_inventory.groupby('Product Category').agg(
+        Number_of_Product=('Product ID', 'nunique'),
+        Average_Stock_Level=('Current Stock', 'mean')
+    ).reset_index()
+    st.table(category_summary)
+
+
+
+def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
+    """Generate daily sales forecast for a specific product."""
+    product_data = daily_sales[daily_sales['Product ID'] == product_id].set_index('Date')['Units Sold']
+    if len(product_data) < 10:
+        return pd.DataFrame({'Date': [], 'Forecasted Sales': []})
+
+    model = SARIMAX(product_data, order=(1, 1, 1), seasonal_order=(1, 1, 1, 7))
+    results = model.fit(disp=False)
+    forecast = results.get_forecast(steps=forecast_days)
+    forecast_values = forecast.predicted_mean
+
+    forecast_dates = pd.date_range(start=product_data.index.max() + timedelta(days=1), periods=forecast_days)
+    return pd.DataFrame({'Date': forecast_dates, 'Forecasted Sales': forecast_values})
+
 
 
 def price_sensitivity():
@@ -471,7 +684,19 @@ def price_sensitivity():
             start_date, end_date = [datetime.strptime(date.strip(), "%Y-%m-%d") for date in period.split('to')]
             dates.append((start_date, end_date))
         df['Promotion Period Classification'] = df['Timestamp Purchase'].apply(lambda x: classify_proximity_period(x, dates))
+        
+        # กรองข้อมูล ไม่รวม "No Promotion"
+        df = df[df['Promotion Period Classification'] != 'No Promotion']
+        
         return df.groupby(['Promotion Period Classification', 'Product Category'])['Units Sold'].sum().reset_index()
+
+    def create_promotion_table(aggregated_df):
+        pivot_table = aggregated_df.pivot(
+            index='Product Category',
+            columns='Promotion Period Classification',
+            values='Units Sold'
+        ).fillna(0)  # Fill NaN with 0 for missing periods
+        return pivot_table
 
     def plot_promotion_data(aggregated_df, promo_type):
         plt.figure(figsize=(14, 8))
@@ -490,30 +715,58 @@ def price_sensitivity():
         plt.tight_layout()
         st.pyplot(plt)
 
-    # Generate tables showing best-to-worst promotions for each category
-    def generate_category_promo_tables(df):
-        categories = df['Product Category'].unique()
-        for category in categories:
-            category_data = df[df['Product Category'] == category]
-            promo_ranking = category_data.groupby(['Promotion Type'])['Units Sold'].sum().reset_index()
-            promo_ranking = promo_ranking.sort_values(by='Units Sold', ascending=False)
+    # คำนวณค่าเฉลี่ยสำหรับเปรียบเทียบ
+    def calculate_avg_units(promotion_table):
+        promotion_table['Avg Before Promo'] = promotion_table[['-3M', '-1M']].mean(axis=1)
+        promotion_table['Avg During Promo'] = promotion_table['During Promo']
+        promotion_table['Avg After Promo'] = promotion_table[['+1M', '+3M']].mean(axis=1)
+        return promotion_table[['Avg Before Promo', 'Avg During Promo', 'Avg After Promo']]
 
-            st.subheader(f"Promotions Ranked by Effectiveness - {category}")
-            st.table(
-                promo_ranking.rename(columns={'Units Sold': 'Total Units Sold'})
-                .style.format({'Total Units Sold': '{:.0f}'})
-            )
+    # Process promotion types
+    promotion_types = [ptype for ptype in df_merged['Promotion Type'].unique() if ptype != 'No Promotion']
 
-    promotion_types = df_merged['Promotion Type'].unique()
+    avg_comparison_list = []
 
-    # Iterate through each promotion type, plot data, and display tables
     for promo_type in promotion_types:
         aggregated = prepare_promotion_data(df_merged, promo_type)
         st.subheader(f"Promotion Type: {promo_type}")
+
+        # Plot data (keep the graph)
         plot_promotion_data(aggregated, promo_type)
 
-    # Generate and display category-specific tables
-    generate_category_promo_tables(df_merged)
+        # Generate updated tables
+        promotion_table = create_promotion_table(aggregated)
+
+        # Sort columns by period order but only include existing columns
+        period_order = ['-3M', '-1M', 'During Promo', '+1M', '+3M']
+        valid_columns = [col for col in period_order if col in promotion_table.columns]
+        promotion_table = promotion_table[valid_columns]
+
+        # Display the updated table
+        st.subheader(f"{promo_type} Units Sold Table")
+        st.table(promotion_table)
+
+        # Calculate average units and collect for comparison
+        avg_comparison_list.append(calculate_avg_units(promotion_table).mean())
+
+    # Combine and plot comparison of promotion effectiveness
+    avg_comparison = pd.concat(avg_comparison_list, axis=1)
+    avg_comparison.columns = promotion_types
+
+    # สลับตำแหน่งแสดงผล: แสดงกราฟก่อน
+    st.subheader("Comparison of Promotion Effectiveness")
+    fig, ax = plt.subplots(figsize=(12, 6))
+    avg_comparison.T.plot(kind='bar', ax=ax, rot=0, cmap='Set2')
+
+    ax.set_title("Comparison of Promotion Effectiveness by Average Units Sold")
+    ax.set_xlabel("Promotion Type")
+    ax.set_ylabel("Average Units Sold")
+    ax.legend(title="Promotion Period", loc="upper left", bbox_to_anchor=(1.05, 1))
+    st.pyplot(fig)
+
+    # แสดงตารางหลังกราฟ
+    st.table(avg_comparison)
+
 
 
 # Main App with Login Check
