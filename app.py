@@ -75,6 +75,7 @@ df_transaction = pd.read_csv(r'Transaction_Dataset.csv')
 df_inventory = pd.read_csv(r'Inventory_Dataset.csv')
 df_campaign = pd.read_csv(r'Campaign_Dataset.csv')
 
+
 # Initialize session state variables
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
@@ -127,6 +128,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
 def browsing_pattern():
     st.header("Browsing Pattern Analysis")  # Main header stays as is
 
@@ -158,34 +160,29 @@ def browsing_pattern():
     ]
     cmap = LinearSegmentedColormap.from_list("CustomPurplePinkRed", custom_palette)
 
-    # Create a two-column layout for heatmap and distribution graph
-    col1, col2 = st.columns(2)
+    # Heatmap Section
+    st.markdown("### Product Pair Heatmap")
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(pivot_table, annot=True, cmap=cmap, fmt='d', ax=ax, cbar_kws={'label': 'Number of Pairs'})
+    plt.xticks(rotation=90)
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+    st.pyplot(fig)
 
-    # Left column: Heatmap
-    with col1:
-        st.markdown("### Product Pair Heatmap")
-        fig, ax = plt.subplots(figsize=(10, 8))
-        sns.heatmap(pivot_table, annot=True, cmap=cmap, fmt='d', ax=ax, cbar_kws={'label': 'Number of Pairs'})
-        plt.xticks(rotation=90)
-        plt.yticks(rotation=0)
-        plt.tight_layout()
-        st.pyplot(fig)
+    # Distribution of Product Pair Counts Section (moved below the heatmap)
+    st.markdown("### Distribution of Product Pair Counts")
+    Q1 = df_pair_counts['Count'].quantile(0.25)
+    Q3 = df_pair_counts['Count'].quantile(0.75)
+    IQR = Q3 - Q1
+    upper_bound = Q3 + 1.5 * IQR
 
-    # Right column: Distribution of Product Pair Counts
-    with col2:
-        st.markdown("### Distribution of Product Pair Counts")
-        Q1 = df_pair_counts['Count'].quantile(0.25)
-        Q3 = df_pair_counts['Count'].quantile(0.75)
-        IQR = Q3 - Q1
-        upper_bound = Q3 + 1.5 * IQR
-
-        plt.figure(figsize=(8, 6))
-        sns.histplot(df_pair_counts['Count'], bins=30, kde=True, color="#A569BD", alpha=0.8)
-        plt.axvline(upper_bound, color='red', linestyle='--', label='Outstanding Threshold')
-        plt.xlabel('Count', fontsize=12)
-        plt.ylabel('Frequency', fontsize=12)
-        plt.legend()
-        st.pyplot(plt)
+    plt.figure(figsize=(8, 6))
+    sns.histplot(df_pair_counts['Count'], bins=30, kde=True, color="#A569BD", alpha=0.8)
+    plt.axvline(upper_bound, color='red', linestyle='--', label='Outstanding Threshold')
+    plt.xlabel('Count', fontsize=12)
+    plt.ylabel('Frequency', fontsize=12)
+    plt.legend()
+    st.pyplot(plt)
 
     # Create another two-column layout for tables
     col3, col4 = st.columns(2)
