@@ -575,8 +575,30 @@ def inventory_analysis():
     }
     df_inventory['Lead Time'] = df_inventory['Product Category'].map(category_lead_times)
 
-    # Calculate Reorder Point
-    df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * df_inventory['Lead Time']
+    # Initialize the Reorder Point column
+    if 'Reorder Point' not in df_inventory.columns:
+        df_inventory['Reorder Point'] = df_inventory['Average Daily Sales'] * df_inventory['Lead Time']
+
+    # Sidebar: Graph Type Selection
+    st.sidebar.subheader("Graph Type")
+    graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
+
+    # Sidebar: Search and Update Reorder Point
+    st.sidebar.subheader("Update Reorder Point")
+    selected_product = st.sidebar.selectbox(
+        "Search and Select Product",
+        options=df_inventory['Product ID'].unique(),
+        format_func=lambda x: f"{x} - {df_inventory.loc[df_inventory['Product ID'] == x, 'Product Category'].iloc[0]}"
+    )
+
+    # Input box for Reorder Point
+    if selected_product:
+        new_reorder_point = st.sidebar.number_input(
+            f"Set Reorder Point for Product {selected_product}",
+            min_value=0,
+            value=int(df_inventory[df_inventory['Product ID'] == selected_product]['Reorder Point'].iloc[0])
+        )
+        df_inventory.loc[df_inventory['Product ID'] == selected_product, 'Reorder Point'] = new_reorder_point
 
     # Stock status calculation
     def determine_stock_status(row):
@@ -588,10 +610,6 @@ def inventory_analysis():
             return 'Out of Stock'
 
     df_inventory['Stock Status'] = df_inventory.apply(determine_stock_status, axis=1)
-
-    # Sidebar to toggle between graph types
-    st.sidebar.subheader("Graph Type")
-    graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
 
     # Define custom purple-pink gradient palette
     custom_palette = [
@@ -682,6 +700,7 @@ def inventory_analysis():
             Average_Stock_Level=('Current Stock', 'mean')
         ).reset_index()
         st.table(category_summary)
+
 
 def forecast_daily_sales(product_id, daily_sales, forecast_days=30):
     product_data = daily_sales[daily_sales['Product ID'] == product_id].set_index('Date')['Units Sold']
