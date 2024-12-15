@@ -209,19 +209,13 @@ def browsing_pattern():
 def forecast_sales_by_region_and_category(df, forecast_months=3):
     """
     Forecast sales by region and product category using all available data across years.
-    Dynamically starts forecasting from the latest available date in the dataset.
     """
     forecast_results = []
-
-    # Determine the latest year and month in the dataset
     latest_year = df['Year of Purchase'].max()
     latest_month = df[df['Year of Purchase'] == latest_year]['Month of Purchase'].max()
-
-    # Group data by region and product category
     grouped = df.groupby(['Geographical Location', 'Product Category'])
 
     for (region, category), data in grouped:
-        # Aggregate monthly sales across all years
         monthly_sales = data.groupby(['Year of Purchase', 'Month of Purchase'])['Units Sold'].sum()
         monthly_sales = monthly_sales.unstack(level=0).stack().reindex(
             pd.MultiIndex.from_product(
@@ -231,23 +225,13 @@ def forecast_sales_by_region_and_category(df, forecast_months=3):
             fill_value=0
         )
 
-        # Flatten the index for ExponentialSmoothing
         monthly_sales = monthly_sales.reset_index(level=1, drop=True)
         try:
-            # Create a proper time index for the monthly sales
             start_date = f"{df['Year of Purchase'].min()}-01-01"
-            monthly_sales.index = pd.date_range(
-                start=start_date,
-                periods=len(monthly_sales),
-                freq='M'  # Month-end frequency
-            )
-
-            # Fit Holt-Winters model using all historical data
+            monthly_sales.index = pd.date_range(start=start_date, periods=len(monthly_sales), freq='M')
             model = ExponentialSmoothing(monthly_sales, seasonal='add', seasonal_periods=12)
             fit = model.fit()
         except Exception as e:
-            logging.warning(f"Insufficient data or error for region: {region}, category: {category}. Using fallback model. Error: {e}")
-            # Fallback to a simple average
             forecast = [monthly_sales.mean()] * forecast_months
             forecast_df = pd.DataFrame({
                 'Geographical Location': region,
@@ -258,10 +242,7 @@ def forecast_sales_by_region_and_category(df, forecast_months=3):
             forecast_results.append(forecast_df)
             continue
 
-        # Forecast next months dynamically
         forecast = fit.forecast(forecast_months)
-
-        # Handle year-end wrap-around for forecasted months
         forecast_months_adjusted = []
         current_month = latest_month
         current_year = latest_year
@@ -281,7 +262,6 @@ def forecast_sales_by_region_and_category(df, forecast_months=3):
         })
         forecast_results.append(forecast_df)
 
-    # Combine all forecasts
     if forecast_results:
         forecast_data = pd.concat(forecast_results, ignore_index=True)
     else:
@@ -298,137 +278,135 @@ def seasonal_and_geographic():
     df_transactions_customer_item = pd.merge(df_transactions_customer, df_item, on="Transaction ID", how="left")
     df_full = pd.merge(df_transactions_customer_item, df_inventory, on='Product ID', how="left")
 
-    # Add date-related columns
+    # Date processing
     df_full['Year of Purchase'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.year
     df_full['Month of Purchase'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.month
-    df_full['Month Name'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.strftime('%B')
+    df_full['Day Fraction'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.day / pd.to_datetime(df_full['Timestamp Purchase']).dt.days_in_month
 
-    # Group data for analysis
     monthly_sales_summary = df_full.groupby(
         ['Year of Purchase', 'Month of Purchase', 'Product Category', 'Geographical Location']
-    ).agg({'Units Sold': 'sum'}).reset_index()
+    ).agg({'Units Sold': 'sum', 'Day Fraction': 'mean'}).reset_index()
 
+    global max_units_sold
     max_units_sold = monthly_sales_summary['Units Sold'].max()
-    monthly_sales_summary['Bubble Size'] = (monthly_sales_summary['Units Sold'] / max_units_sold) * 80
+    monthly_sales_summary['Bubble Size'] = (monthly_sales_summary['Units Sold'] / max_units_sold) * 60
 
-    # Define regions and assign custom palette from Price Sensitivity
+    # Sidebar Filters
     regions = monthly_sales_summary['Geographical Location'].unique()
-    custom_palette = [
-        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
-        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
-    ]
+    custom_palette = ['#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD', '#884EA0', '#76448A']
+    global color_map
     color_map = dict(zip(regions, custom_palette[:len(regions)]))
 
-    # Get the latest year from the data
-    latest_year = df_full['Year of Purchase'].max()
+    # Move 'Choose Year for Visualization' Above Predictive Options
+    available_years = sorted(df_full['Year of Purchase'].unique(), reverse=True)
+    selected_graph_year = st.sidebar.selectbox("Choose Year for Visualization", available_years, index=0)
 
-    # Dropdown menu to select year with default as the latest year
-    selected_year = st.selectbox(
-        "Select Year for Analysis",
-        options=sorted(df_full['Year of Purchase'].unique()),
-        index=list(sorted(df_full['Year of Purchase'].unique())).index(latest_year)
+    st.sidebar.subheader("Predictive Analysis Options")
+    show_predictive = st.sidebar.checkbox("Show Predictive Analysis", value=False)
+    if show_predictive:
+        forecast_months = st.sidebar.slider("Select Forecast Months", min_value=1, max_value=6, value=3)
+
+    percentile_threshold = st.sidebar.slider("Select Percentile (%)", min_value=0, max_value=100, value=90)
+
+    selected_years = st.sidebar.multiselect("Select Year(s)", available_years, default=available_years)
+    selected_regions = st.sidebar.multiselect("Select Region(s)", regions, default=regions)
+    selected_categories = st.sidebar.multiselect(
+        "Select Product Category(ies)",
+        monthly_sales_summary['Product Category'].unique(),
+        default=monthly_sales_summary['Product Category'].unique()
     )
 
-    # Add input for Percentile threshold
-    st.sidebar.subheader("Percentile Filter")
-    percentile_threshold = st.sidebar.slider("Select Percentile (%)", min_value=0, max_value=100, value=90, step=1)
+    # Filter data for graph and table
+    threshold_value = monthly_sales_summary['Units Sold'].quantile(percentile_threshold / 100)
+    filtered_graph_data = monthly_sales_summary[
+        (monthly_sales_summary['Year of Purchase'] == selected_graph_year) &
+        (monthly_sales_summary['Units Sold'] >= threshold_value) &
+        (monthly_sales_summary['Geographical Location'].isin(selected_regions)) &
+        (monthly_sales_summary['Product Category'].isin(selected_categories))
+    ]
 
-    # Filter data based on Percentile
-    threshold_value = np.percentile(monthly_sales_summary['Units Sold'], percentile_threshold)
-    filtered_sales_summary = monthly_sales_summary[monthly_sales_summary['Units Sold'] >= threshold_value]
+    # Forecast Data
+    if show_predictive:
+        forecast_df = forecast_sales_by_region_and_category(monthly_sales_summary, forecast_months=forecast_months)
+        forecast_df['Bubble Size'] = (forecast_df['Units Sold'] / max_units_sold) * 60
+        filtered_graph_data = pd.concat([filtered_graph_data, forecast_df], ignore_index=True)
 
-    # Generate the bubble chart for the selected year
-    def plot_sales_with_custom_colors(year):
-        year_data = filtered_sales_summary[filtered_sales_summary['Year of Purchase'] == year]
-        year_data['x_positions'] = year_data['Month of Purchase']
-
+    # Plot Function
+    def plot_sales_with_forecast(data, year):
         fig = go.Figure()
-
-        # Add data to the plot using the custom palette
         for region in regions:
-            region_data = year_data[year_data['Geographical Location'] == region]
+            region_data = data[data['Geographical Location'] == region]
+            historical_data = region_data[region_data['Year of Purchase'] == year]
+            forecast_data = region_data[region_data['Year of Purchase'] > year]
+
+            # Historical Data
             fig.add_trace(go.Scatter(
-                x=region_data['x_positions'],
-                y=region_data['Product Category'],
+                x=historical_data['Month of Purchase'] + historical_data['Day Fraction'] - 1,
+                y=historical_data['Product Category'],
                 mode='markers',
                 marker=dict(
-                    size=region_data['Bubble Size'],
+                    size=(historical_data['Units Sold'] / max_units_sold) * 60,
                     color=color_map[region],
-                    opacity=0.8,
-                    line=dict(width=1, color='DarkSlateGrey')
+                    opacity=0.8
                 ),
-                name=f"{region} (Historical)",
-                text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
-                      for month, category, units in zip(
-                          region_data['Month of Purchase'],
-                          region_data['Product Category'],
-                          region_data['Units Sold']
-                      )],
-                hoverinfo="text"
+                name=f"{region} (Historical)"
             ))
 
-        # Adjust layout to increase graph size and reduce whitespace
+            # Forecast Data
+            if not forecast_data.empty:
+                fig.add_trace(go.Scatter(
+                    x=forecast_data['Month of Purchase'] + forecast_data['Day Fraction'] - 1,
+                    y=forecast_data['Product Category'],
+                    mode='markers',
+                    marker=dict(
+                        size=(forecast_data['Units Sold'] / max_units_sold) * 60,
+                        color=color_map[region],
+                        opacity=0.4
+                    ),
+                    name=f"{region} (Forecast)"
+                ))
+
         fig.update_layout(
-            title=f"Monthly Sales (Year: {year})",
+            title=f"Monthly Sales by Product Category for Year {year} (Predictive Included)" if show_predictive else f"Monthly Sales by Product Category for Year {year}",
             xaxis=dict(
                 title="Month of Purchase",
                 tickvals=list(range(1, 13)),
                 ticktext=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                range=[0, 13],
+                range=[0, 12.5]
             ),
             yaxis=dict(
                 title="Product Category",
                 categoryorder="array",
                 categoryarray=monthly_sales_summary['Product Category'].unique(),
+                range=[-0.5, len(monthly_sales_summary['Product Category'].unique()) - 0.5]
             ),
             legend_title="Region",
-            width=1400,  # Increase the width
-            height=800,  # Increase the height
-            margin=dict(l=20, r=20, t=50, b=20),  # Reduce whitespace
+            width=1200,
+            height=600
         )
         return fig
 
-    st.plotly_chart(plot_sales_with_custom_colors(selected_year), use_container_width=True)
+    # Plot Graph
+    if not filtered_graph_data.empty:
+        graph_fig = plot_sales_with_forecast(filtered_graph_data, selected_graph_year)
+        st.plotly_chart(graph_fig, use_container_width=True)
+    else:
+        st.warning("No data available for the selected filters.")
 
-    # **New Table**: Average Units Sold Summary
+    # Table: Average Units Sold
     st.subheader("Average Units Sold by Year, Region, and Product Category")
-    avg_units_sold_summary = df_full.groupby(
+    avg_units_sold_summary = monthly_sales_summary.groupby(
         ['Year of Purchase', 'Geographical Location', 'Product Category']
     ).agg({'Units Sold': 'mean'}).reset_index()
 
-    avg_units_sold_summary.rename(columns={'Units Sold': 'Avg Units Sold'}, inplace=True)
-    avg_units_sold_summary = avg_units_sold_summary.sort_values(
-        ['Year of Purchase', 'Geographical Location', 'Avg Units Sold'], ascending=[True, True, False]
-    )
-
-    # **Checkbox Filters**
-    st.sidebar.subheader("Filters")
-    selected_years = st.sidebar.multiselect(
-        "Select Year(s)", 
-        options=avg_units_sold_summary['Year of Purchase'].unique(), 
-        default=avg_units_sold_summary['Year of Purchase'].unique()
-    )
-    selected_regions = st.sidebar.multiselect(
-        "Select Region(s)", 
-        options=avg_units_sold_summary['Geographical Location'].unique(), 
-        default=avg_units_sold_summary['Geographical Location'].unique()
-    )
-    selected_categories = st.sidebar.multiselect(
-        "Select Product Category(ies)", 
-        options=avg_units_sold_summary['Product Category'].unique(), 
-        default=avg_units_sold_summary['Product Category'].unique()
-    )
-
-    # Apply filters
     filtered_summary = avg_units_sold_summary[
         (avg_units_sold_summary['Year of Purchase'].isin(selected_years)) &
         (avg_units_sold_summary['Geographical Location'].isin(selected_regions)) &
         (avg_units_sold_summary['Product Category'].isin(selected_categories))
     ]
 
-    # Display the filtered table
     st.table(filtered_summary)
-    
+
 
 def funnel_analysis():
     st.header("Funnel Analysis")
@@ -583,22 +561,29 @@ def inventory_analysis():
     st.sidebar.subheader("Graph Type")
     graph_type = st.sidebar.radio("Select Graph Type", options=["Historical", "Predictive"])
 
-    # Sidebar: Search and Update Reorder Point
-    st.sidebar.subheader("Update Reorder Point")
-    selected_product = st.sidebar.selectbox(
-        "Search and Select Product",
-        options=df_inventory['Product ID'].unique(),
-        format_func=lambda x: f"{x} - {df_inventory.loc[df_inventory['Product ID'] == x, 'Product Category'].iloc[0]}"
-    )
-
-    # Input box for Reorder Point
-    if selected_product:
-        new_reorder_point = st.sidebar.number_input(
-            f"Set Reorder Point for Product {selected_product}",
-            min_value=0,
-            value=int(df_inventory[df_inventory['Product ID'] == selected_product]['Reorder Point'].iloc[0])
+    # Sidebar: Update Lead Time (Visible Only for Historical)
+    if graph_type == "Historical":
+        st.sidebar.subheader("Update Lead Time")
+        selected_product = st.sidebar.selectbox(
+            "Search and Select Product",
+            options=df_inventory['Product ID'].unique(),
+            format_func=lambda x: f"{x} - {df_inventory.loc[df_inventory['Product ID'] == x, 'Product Category'].iloc[0]}"
         )
-        df_inventory.loc[df_inventory['Product ID'] == selected_product, 'Reorder Point'] = new_reorder_point
+
+        # Input box for Lead Time
+        if selected_product:
+            current_lead_time = int(df_inventory[df_inventory['Product ID'] == selected_product]['Lead Time'].iloc[0])
+            new_lead_time = st.sidebar.number_input(
+                f"Set Lead Time for Product {selected_product}",
+                min_value=1,
+                value=current_lead_time
+            )
+
+            # Update Lead Time and Reorder Point
+            if new_lead_time != current_lead_time:
+                df_inventory.loc[df_inventory['Product ID'] == selected_product, 'Lead Time'] = new_lead_time
+                df_inventory.loc[df_inventory['Product ID'] == selected_product, 'Reorder Point'] = \
+                    df_inventory.loc[df_inventory['Product ID'] == selected_product, 'Average Daily Sales'] * new_lead_time
 
     # Stock status calculation
     def determine_stock_status(row):
@@ -623,10 +608,8 @@ def inventory_analysis():
         bars = ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=[
-                custom_palette[3] if status == 'In Stock' else custom_palette[6]
-                for status in df_inventory['Stock Status']
-            ],
+            color=[custom_palette[3] if status == 'In Stock' else custom_palette[6]
+                   for status in df_inventory['Stock Status']],
             alpha=0.8,
             label='Current Stock'
         )
@@ -638,8 +621,11 @@ def inventory_analysis():
             linewidth=1.5,
             label='Reorder Point'
         )
+        ax.set_title('Inventory Levels and Reorder Points (Historical)', fontweight='bold', fontsize=14)
+
     elif graph_type == "Predictive":
-        forecast_days = 30
+        st.sidebar.subheader("Forecast Duration")
+        forecast_days = st.sidebar.slider("Select Days for Forecast", min_value=7, max_value=60, value=30)
 
         # Generate forecasted sales
         forecasted_sales = {
@@ -652,14 +638,17 @@ def inventory_analysis():
         df_inventory['Additional Units Needed'] = df_inventory['Forecasted Sales'] - df_inventory['Current Stock']
         df_inventory['Additional Units Needed'] = df_inventory['Additional Units Needed'].apply(lambda x: max(x, 0))
 
+        # Define color for bars
+        bar_colors = [
+            custom_palette[5] if row['Current Stock'] < row['Reorder Point'] else custom_palette[3]
+            for _, row in df_inventory.iterrows()
+        ]
+
         # Plot bars for current stock
-        bars = ax.bar(
+        ax.bar(
             df_inventory['Product ID'],
             df_inventory['Current Stock'],
-            color=[
-                custom_palette[7] if row['Current Stock'] < row['Reorder Point'] else custom_palette[3]
-                for _, row in df_inventory.iterrows()
-            ],
+            color=bar_colors,
             alpha=0.8,
             label='Current Stock'
         )
@@ -669,15 +658,15 @@ def inventory_analysis():
             df_inventory['Product ID'],
             df_inventory['Additional Units Needed'],
             bottom=df_inventory['Current Stock'],
-            color='#E8DAEF',  # Lighter color for additional units needed
+            color=custom_palette[1],
             alpha=0.8,
-            label='Additional Units Needed'
+            label='Forecasted Additional Units'
         )
+        ax.set_title(f'Inventory Forecast for Next {forecast_days} Days', fontweight='bold', fontsize=14)
 
     ax.set_xlabel('Product ID', fontweight='bold', fontsize=12)
     ax.set_ylabel('Units', fontweight='bold', fontsize=12)
     ax.set_ylim(0, 100)  # Ensure consistent scale
-    ax.set_title('Inventory Levels and Reorder Points', fontweight='bold', fontsize=14)
     ax.set_xticks(range(len(df_inventory['Product ID'])))
     ax.set_xticklabels(df_inventory['Product ID'], rotation=45, ha='right', fontsize=9)
     ax.legend()
