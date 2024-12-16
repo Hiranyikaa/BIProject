@@ -278,134 +278,171 @@ def seasonal_and_geographic():
     df_transactions_customer_item = pd.merge(df_transactions_customer, df_item, on="Transaction ID", how="left")
     df_full = pd.merge(df_transactions_customer_item, df_inventory, on='Product ID', how="left")
 
-    # Date processing
+    # Add date-related columns
     df_full['Year of Purchase'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.year
     df_full['Month of Purchase'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.month
-    df_full['Day Fraction'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.day / pd.to_datetime(df_full['Timestamp Purchase']).dt.days_in_month
+    df_full['Month Name'] = pd.to_datetime(df_full['Timestamp Purchase']).dt.strftime('%B')
 
+    # Group data for analysis
     monthly_sales_summary = df_full.groupby(
         ['Year of Purchase', 'Month of Purchase', 'Product Category', 'Geographical Location']
-    ).agg({'Units Sold': 'sum', 'Day Fraction': 'mean'}).reset_index()
+    ).agg({'Units Sold': 'sum'}).reset_index()
 
-    global max_units_sold
     max_units_sold = monthly_sales_summary['Units Sold'].max()
-    monthly_sales_summary['Bubble Size'] = (monthly_sales_summary['Units Sold'] / max_units_sold) * 60
+    monthly_sales_summary['Bubble Size'] = (monthly_sales_summary['Units Sold'] / max_units_sold) * 80
 
-    # Sidebar Filters
+    # Define regions and purple-pink color map
+    custom_palette = [
+        '#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD',
+        '#884EA0', '#76448A', '#633974', '#512E5F', '#4A235A'
+    ]
     regions = monthly_sales_summary['Geographical Location'].unique()
-    custom_palette = ['#F5EEF8', '#E8DAEF', '#D2B4DE', '#BB8FCE', '#A569BD', '#884EA0', '#76448A']
-    global color_map
     color_map = dict(zip(regions, custom_palette[:len(regions)]))
 
-    # Move 'Choose Year for Visualization' Above Predictive Options
-    available_years = sorted(df_full['Year of Purchase'].unique(), reverse=True)
-    selected_graph_year = st.sidebar.selectbox("Choose Year for Visualization", available_years, index=0)
+    # Get the latest year from the data
+    latest_year = df_full['Year of Purchase'].max()
 
-    st.sidebar.subheader("Predictive Analysis Options")
-    show_predictive = st.sidebar.checkbox("Show Predictive Analysis", value=False)
-    if show_predictive:
-        forecast_months = st.sidebar.slider("Select Forecast Months", min_value=1, max_value=6, value=3)
-
-    percentile_threshold = st.sidebar.slider("Select Percentile (%)", min_value=0, max_value=100, value=90)
-
-    selected_years = st.sidebar.multiselect("Select Year(s)", available_years, default=available_years)
-    selected_regions = st.sidebar.multiselect("Select Region(s)", regions, default=regions)
-    selected_categories = st.sidebar.multiselect(
-        "Select Product Category(ies)",
-        monthly_sales_summary['Product Category'].unique(),
-        default=monthly_sales_summary['Product Category'].unique()
+    # Dropdown menu to select year with default as the latest year
+    selected_year = st.selectbox(
+        "Select Year for Analysis",
+        options=sorted(df_full['Year of Purchase'].unique()),
+        index=list(sorted(df_full['Year of Purchase'].unique())).index(latest_year)
     )
 
-    # Filter data for graph and table
-    threshold_value = monthly_sales_summary['Units Sold'].quantile(percentile_threshold / 100)
-    filtered_graph_data = monthly_sales_summary[
-        (monthly_sales_summary['Year of Purchase'] == selected_graph_year) &
-        (monthly_sales_summary['Units Sold'] >= threshold_value) &
-        (monthly_sales_summary['Geographical Location'].isin(selected_regions)) &
-        (monthly_sales_summary['Product Category'].isin(selected_categories))
-    ]
+    # Add input for Percentile threshold
+    st.sidebar.subheader("Percentile Filter")
+    percentile_threshold = st.sidebar.slider("Select Percentile (%)", min_value=0, max_value=100, value=90, step=1)
 
-    # Forecast Data
-    if show_predictive:
-        forecast_df = forecast_sales_by_region_and_category(monthly_sales_summary, forecast_months=forecast_months)
-        forecast_df['Bubble Size'] = (forecast_df['Units Sold'] / max_units_sold) * 60
-        filtered_graph_data = pd.concat([filtered_graph_data, forecast_df], ignore_index=True)
+    # Filter data based on Percentile
+    threshold_value = np.percentile(monthly_sales_summary['Units Sold'], percentile_threshold)
+    filtered_sales_summary = monthly_sales_summary[monthly_sales_summary['Units Sold'] >= threshold_value]
 
-    # Plot Function
-    def plot_sales_with_forecast(data, year):
+    # Add option to include forecast
+    include_forecast = st.sidebar.checkbox("Include Forecast Data", value=False)
+
+    # Generate forecast if selected
+    forecast_data = None
+    if include_forecast:
+        forecast_months = st.sidebar.slider("Forecast Months", min_value=1, max_value=12, value=3, step=1)
+        forecast_data = forecast_sales_by_region_and_category(df_full, forecast_months)
+
+    # Generate the bubble chart for the selected year
+    def plot_sales_with_forecast(year, forecast_df=None):
+        year_data = filtered_sales_summary[filtered_sales_summary['Year of Purchase'] == year]
+        year_data['x_positions'] = year_data['Month of Purchase']
+
         fig = go.Figure()
-        for region in regions:
-            region_data = data[data['Geographical Location'] == region]
-            historical_data = region_data[region_data['Year of Purchase'] == year]
-            forecast_data = region_data[region_data['Year of Purchase'] > year]
 
-            # Historical Data
+        # Add historical data to the plot
+        for i, region in enumerate(regions):
+            region_data = year_data[year_data['Geographical Location'] == region]
             fig.add_trace(go.Scatter(
-                x=historical_data['Month of Purchase'] + historical_data['Day Fraction'] - 1,
-                y=historical_data['Product Category'],
+                x=region_data['x_positions'],
+                y=region_data['Product Category'],
                 mode='markers',
                 marker=dict(
-                    size=(historical_data['Units Sold'] / max_units_sold) * 60,
-                    color=color_map[region],
-                    opacity=0.8
+                    size=region_data['Bubble Size'],
+                    color=custom_palette[i],  # ใช้สีจาก custom_palette ตามลำดับ
+                    opacity=0.8,
+                    line=dict(width=1, color='DarkSlateGrey')
                 ),
-                name=f"{region} (Historical)"
+                name=f"{region} (Historical)",
+                text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
+                      for month, category, units in zip(
+                          region_data['Month of Purchase'],
+                          region_data['Product Category'],
+                          region_data['Units Sold']
+                      )],
+                hoverinfo="text"
             ))
 
-            # Forecast Data
-            if not forecast_data.empty:
+        # Add forecast data to the plot
+        if forecast_df is not None:
+            forecast_year_data = forecast_df[forecast_df['Year of Purchase'] == year]
+            for i, region in enumerate(regions):
+                forecast_region_data = forecast_year_data[forecast_year_data['Geographical Location'] == region]
                 fig.add_trace(go.Scatter(
-                    x=forecast_data['Month of Purchase'] + forecast_data['Day Fraction'] - 1,
-                    y=forecast_data['Product Category'],
+                    x=forecast_region_data['Month of Purchase'],
+                    y=forecast_region_data['Product Category'],
                     mode='markers',
                     marker=dict(
-                        size=(forecast_data['Units Sold'] / max_units_sold) * 60,
-                        color=color_map[region],
-                        opacity=0.4
+                        size=forecast_region_data['Units Sold'] / max_units_sold * 80,
+                        color=custom_palette[i],  # ใช้สีจาก custom_palette
+                        opacity=0.4,
+                        line=dict(width=1, color='DarkSlateGrey')
                     ),
-                    name=f"{region} (Forecast)"
+                    name=f"{region} (Forecast)",
+                    text=[f"Region: {region}<br>Month: {month}<br>Category: {category}<br>Units Sold: {units}"
+                          for month, category, units in zip(
+                              forecast_region_data['Month of Purchase'],
+                              forecast_region_data['Product Category'],
+                              forecast_region_data['Units Sold']
+                          )],
+                    hoverinfo="text",
+                    showlegend=False
                 ))
 
         fig.update_layout(
-            title=f"Monthly Sales by Product Category for Year {year} (Predictive Included)" if show_predictive else f"Monthly Sales by Product Category for Year {year}",
+            title=f"Monthly Sales with Forecast (Year: {year})",
             xaxis=dict(
                 title="Month of Purchase",
                 tickvals=list(range(1, 13)),
                 ticktext=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                range=[0, 12.5]
+                range=[0, 13],
             ),
             yaxis=dict(
                 title="Product Category",
                 categoryorder="array",
                 categoryarray=monthly_sales_summary['Product Category'].unique(),
-                range=[-0.5, len(monthly_sales_summary['Product Category'].unique()) - 0.5]
             ),
             legend_title="Region",
             width=1200,
-            height=600
+            height=700,
+            margin=dict(l=50, r=50, t=80, b=50),
         )
         return fig
 
-    # Plot Graph
-    if not filtered_graph_data.empty:
-        graph_fig = plot_sales_with_forecast(filtered_graph_data, selected_graph_year)
-        st.plotly_chart(graph_fig, use_container_width=True)
-    else:
-        st.warning("No data available for the selected filters.")
+    st.plotly_chart(plot_sales_with_forecast(selected_year, forecast_data), use_container_width=True)
 
-    # Table: Average Units Sold
+    # Average Units Sold Summary
     st.subheader("Average Units Sold by Year, Region, and Product Category")
-    avg_units_sold_summary = monthly_sales_summary.groupby(
+    avg_units_sold_summary = df_full.groupby(
         ['Year of Purchase', 'Geographical Location', 'Product Category']
     ).agg({'Units Sold': 'mean'}).reset_index()
 
+    avg_units_sold_summary.rename(columns={'Units Sold': 'Avg Units Sold'}, inplace=True)
+    avg_units_sold_summary = avg_units_sold_summary.sort_values(
+        ['Year of Purchase', 'Geographical Location', 'Avg Units Sold'], ascending=[True, True, False]
+    )
+
+    # Checkbox Filters
+    st.sidebar.subheader("Filters")
+    selected_years = st.sidebar.multiselect(
+        "Select Year(s)", 
+        options=avg_units_sold_summary['Year of Purchase'].unique(), 
+        default=avg_units_sold_summary['Year of Purchase'].unique()
+    )
+    selected_regions = st.sidebar.multiselect(
+        "Select Region(s)", 
+        options=avg_units_sold_summary['Geographical Location'].unique(), 
+        default=avg_units_sold_summary['Geographical Location'].unique()
+    )
+    selected_categories = st.sidebar.multiselect(
+        "Select Product Category(ies)", 
+        options=avg_units_sold_summary['Product Category'].unique(), 
+        default=avg_units_sold_summary['Product Category'].unique()
+    )
+
+    # Apply filters
     filtered_summary = avg_units_sold_summary[
         (avg_units_sold_summary['Year of Purchase'].isin(selected_years)) &
         (avg_units_sold_summary['Geographical Location'].isin(selected_regions)) &
         (avg_units_sold_summary['Product Category'].isin(selected_categories))
     ]
 
+    # Display the filtered table
     st.table(filtered_summary)
+
 
 
 def funnel_analysis():
